@@ -1,1183 +1,1357 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repositorio Académico Digital - Ciencias de la Educación (UAGRM)</title>
-    <style>
-        :root {
-            --uagrm-blue: #0A2540;
-            --uagrm-gold: #D97706;
-            --uagrm-accent: #0284C7;
-            --light-bg: #F8FAFC;
-            --card-border: #E2E8F0;
-            --dark-text: #1E293B;
-            --gray-text: #64748B;
-            --success: #15803D;
-            --danger: #B91C1C;
-            --warning: #B45309;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--light-bg); color: var(--dark-text); line-height: 1.6; }
-
-        /* BARRA SUPERIOR */
-        .top-bar {
-            background-color: #051424;
-            color: #94A3B8;
-            padding: 0.4rem 2rem;
-            font-size: 0.78rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* HEADER INSTITUCIONAL */
-        header { 
-            background: linear-gradient(135deg, var(--uagrm-blue) 0%, #0F172A 100%);
-            color: white; 
-            padding: 1.2rem 2rem; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 5px solid var(--uagrm-gold); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .header-brand { display: flex; align-items: center; gap: 1.5rem; }
-        .logo-box {
-            background: white;
-            padding: 5px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 65px;
-            min-height: 65px;
-        }
-        .logo-img { height: 60px; max-width: 120px; object-fit: contain; }
-        .logo-area h1 { font-size: 0.95rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; color: #E2E8F0; }
-        .logo-area h2 { font-size: 1.4rem; font-weight: 700; color: #FFF; margin-top: 2px; }
-        .logo-area .subhead { font-size: 0.85rem; color: var(--uagrm-gold); font-weight: 600; }
-        
-        nav button { 
-            background: rgba(255,255,255,0.08); 
-            border: 1px solid rgba(255,255,255,0.3); 
-            color: white; 
-            padding: 0.6rem 1rem; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            margin-left: 0.4rem; 
-            font-weight: 600; 
-            font-size: 0.84rem;
-        }
-        nav button:hover { background-color: white; color: var(--uagrm-blue); }
-
-        .container { max-width: 1240px; margin: 2rem auto; padding: 0 1.5rem; }
-
-        /* PORTADA HERO */
-        .hero { 
-            background: white; 
-            padding: 2.5rem; 
-            border-radius: 8px; 
-            border: 1px solid var(--card-border);
-            border-left: 6px solid var(--uagrm-blue);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
-            margin-bottom: 2rem; 
-            text-align: center; 
-        }
-        .hero h2 { color: var(--uagrm-blue); font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 700; }
-        .hero p { color: var(--gray-text); max-width: 800px; margin: 0 auto; font-size: 1.05rem; }
-
-        /* BÚSQUEDA */
-        .search-container {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--card-border);
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .search-title { font-size: 0.9rem; font-weight: 700; color: var(--uagrm-blue); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.5px; }
-        .search-filters { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1rem; }
-        input, select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 5px; font-size: 0.95rem; background-color: #FFF; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--uagrm-accent); box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
-
-        /* REJILLA DE DOCUMENTOS */
-        .grid-docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.5rem; }
-        .card { 
-            background: white; 
-            padding: 1.5rem; 
-            border-radius: 8px; 
-            border: 1px solid var(--card-border); 
-            border-top: 4px solid var(--uagrm-blue); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.06); }
-        .card h3 { color: var(--uagrm-blue); font-size: 1.15rem; margin-bottom: 0.6rem; line-height: 1.4; font-weight: 700; }
-        .meta { font-size: 0.85rem; color: var(--gray-text); margin-bottom: 0.8rem; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.5rem; }
-        .badges-area { margin-bottom: 0.8rem; }
-        .badge { display: inline-block; background: #F1F5F9; color: var(--uagrm-blue); padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-right: 0.4rem; margin-bottom: 0.4rem; border: 1px solid #E2E8F0; }
-        .badge-mencion { background: #E0F2FE; color: #0369A1; border-color: #BAE6FD; }
-        .badge-modalidad { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
-        .badge-warning { background: #FEF3C7; color: #92400E; }
-        .badge-success { background: #DCFCE7; color: #166534; }
-        .keywords-tag { font-size: 0.8rem; color: var(--uagrm-accent); font-style: italic; margin-bottom: 0.5rem; }
-        .visitas-tag { font-size: 0.8rem; color: var(--gray-text); font-weight: 600; margin-bottom: 0.8rem; }
-        
-        /* BOTONES */
-        .btn { display: inline-block; background-color: var(--uagrm-blue); color: white; padding: 0.6rem 1rem; border-radius: 5px; text-decoration: none; text-align: center; font-size: 0.88rem; border: none; cursor: pointer; font-weight: 600; transition: background 0.2s; }
-        .btn:hover { background-color: #0F172A; }
-        .btn-success { background-color: var(--success); }
-        .btn-success:hover { background-color: #14532D; }
-        .btn-danger { background-color: var(--danger); }
-        .btn-danger:hover { background-color: #7F1D1D; }
-        .btn-info { background-color: var(--uagrm-accent); color: white; }
-        .btn-info:hover { background-color: #0369A1; }
-        
-        /* LOGIN Y RECUPERACIÓN */
-        .login-box { max-width: 440px; margin: 3rem auto; background: white; padding: 2.5rem 2rem; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; border: 1px solid var(--card-border); border-top: 5px solid var(--uagrm-blue); }
-        .login-box h3 { color: var(--uagrm-blue); margin-bottom: 0.5rem; font-size: 1.4rem; font-weight: 700; }
-        .link-recuperar { display: inline-block; margin-top: 1rem; font-size: 0.83rem; color: var(--uagrm-accent); text-decoration: underline; cursor: pointer; border: none; background: none; }
-
-        /* PANEL ADMINISTRATIVO Y REVISOR */
-        .admin-panel, .revisor-panel { display: none; background: white; padding: 2rem; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .admin-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.5rem; }
-        .tab-btn { background: none; border: none; font-size: 1rem; font-weight: 700; color: var(--gray-text); cursor: pointer; padding: 0.5rem 1rem; transition: all 0.2s; }
-        .tab-btn.active { color: var(--uagrm-blue); border-bottom: 3px solid var(--uagrm-gold); }
-        .form-group { margin-bottom: 1.2rem; text-align: left; }
-        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; color: var(--dark-text); }
-
-        /* TABLAS */
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
-        th, td { border: 1px solid #E2E8F0; padding: 0.85rem; text-align: left; vertical-align: middle; }
-        th { background-color: #F8FAFC; color: var(--uagrm-blue); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
-        
-        footer { background-color: #0F172A; color: #94A3B8; text-align: center; padding: 2rem 1rem; margin-top: 4rem; border-top: 4px solid var(--uagrm-gold); font-size: 0.88rem; }
-        footer strong { color: #F1F5F9; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="metaTitle">Repositorio Académico Digital - Ciencias de la Educación (UAGRM)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .bg-header-institutional {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
 
-    <div class="top-bar">
-        <span>Universidad Autónoma Gabriel René Moreno • Santa Cruz de la Sierra, Bolivia</span>
-        <span>Sistema de Gestión del Conocimiento y Producción Académica</span>
-    </div>
+  <!-- ENCABEZADO INSTITUCIONAL DINÁMICO -->
+  <header id="headerBar" class="bg-header-institutional text-white shadow-2xl border-b-4 border-amber-400 sticky top-0 z-50 transition-colors duration-300">
+    <div id="headerOverlay" class="absolute inset-0 bg-[#082240]/40 pointer-events-none"></div>
 
-    <header>
-        <div class="header-brand">
-            <div class="logo-box">
-                <img id="imgLogoUagrm" class="logo-img" src="https://via.placeholder.com/150x150/0A2540/FFFFFF?text=Escudo+UAGRM" alt="Escudo UAGRM">
-            </div>
-            
-            <div class="logo-area">
-                <h1>Facultad de Humanidades • UAGRM</h1>
-                <h2 id="header-subtitle">Repositorio Académico Digital</h2>
-                <div class="subhead">Carrera de Ciencias de la Educación</div>
-            </div>
-            
-            <div class="logo-box">
-                <img id="imgLogoCarrera" class="logo-img" src="https://via.placeholder.com/150x150/0284C7/FFFFFF?text=Ciencias+Educación" alt="Logo Carrera">
-            </div>
+    <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+      
+      <!-- LOGO IZQUIERDA -->
+      <div class="bg-white p-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center justify-center shrink-0 w-28 h-24 transition transform hover:scale-105">
+        <img id="imgLogoIzq" src="https://i.ibb.co/3W68QX7/uagrm-logo.png" alt="UAGRM" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/80/ffffff/082240?text=UAGRM'">
+      </div>
+
+      <!-- TÍTULO CENTRAL -->
+      <div class="text-center space-y-1 flex-grow px-2">
+        <p id="headUniv" class="text-[11px] md:text-xs font-black tracking-widest uppercase text-slate-200">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
+        <p id="headFac" class="text-[10px] md:text-xs font-extrabold tracking-wider uppercase text-slate-300">FACULTAD DE HUMANIDADES</p>
+        <h1 id="headTituloPrincipal" class="text-2xl md:text-3xl font-black text-amber-400 tracking-tight uppercase drop-shadow-md">CARRERA DE CIENCIAS DE LA EDUCACIÓN</h1>
+        <div class="pt-0.5">
+          <span id="headBadgeCarrera" class="text-xs md:text-sm font-extrabold text-white tracking-wide border-t border-amber-400/40 pt-0.5 inline-block px-4">
+            Repositorio Académico Digital
+          </span>
         </div>
-        <nav>
-            <button onclick="cambiarVista('publico')">📖 Portal Público</button>
-            <button onclick="cambiarVista('loginRevisor')" style="background-color: var(--uagrm-accent); border-color: var(--uagrm-accent);">👁️ Acceso Revisores</button>
-            <button onclick="cambiarVista('login')" style="background-color: var(--uagrm-gold); border-color: var(--uagrm-gold);">🔐 Acceso Admin</button>
-        </nav>
-    </header>
+      </div>
 
-    <div class="container">
-
-        <!-- VISTA PÚBLICA -->
-        <div id="vista-publica">
-            <section class="hero" id="hero-section">
-                <h2>Repositorio Digital Institucional</h2>
-                <p>Catálogo científico y académico oficial de la Carrera de Ciencias de la Educación. Consulta de trabajos de titulación, producción científica e investigación educativa. Gestión 2026.</p>
-            </section>
-
-            <div class="search-container">
-                <div class="search-title">🔍 Buscador de Trabajos de Grado y Producción Académica</div>
-                <div class="search-filters">
-                    <input type="text" id="searchInput" placeholder="Buscar por título, autor, palabras clave..." onkeyup="filtrarDocumentos()">
-                    <select id="filterColeccion" onchange="filtrarDocumentos()">
-                        <option value="">Todas las colecciones</option>
-                        <option value="Trabajos de titulación">Trabajos de titulación</option>
-                        <option value="Producción científica">Producción científica</option>
-                        <option value="Recursos para la enseñanza">Recursos para la enseñanza</option>
-                    </select>
-                    <select id="filterNivel" onchange="filtrarDocumentos()">
-                        <option value="">Todos los niveles</option>
-                        <option value="Licenciatura">Licenciatura</option>
-                        <option value="Técnico Superior (Salida Intermedia)">Técnico Superior (Salida Intermedia)</option>
-                    </select>
-                    <select id="filterMencion" onchange="filtrarDocumentos()">
-                        <option value="">Todas las menciones</option>
-                        <option value="Psicopedagogía">Psicopedagogía</option>
-                        <option value="Tecnología Educativa">Tecnología Educativa</option>
-                        <option value="Educación Social">Educación Social</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="grid-docs" id="documentGrid"></div>
-        </div>
-
-        <!-- ACCESO REVISORES -->
-        <div id="vista-login-revisor" style="display: none;">
-            <div class="login-box">
-                <h3 style="color: var(--uagrm-accent);">Acceso de Comisión Revisora / Tribunal</h3>
-                <p style="font-size: 0.88rem; color: var(--gray-text); margin-bottom: 1.5rem;">Autenticación para docentes y tribunal evaluador.</p>
-                
-                <form onsubmit="verificarLoginRevisor(event)">
-                    <div class="form-group">
-                        <label>Usuario Revisor</label>
-                        <input type="text" id="revisorUser" required placeholder="Ingrese usuario revisor">
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña de Revisión</label>
-                        <input type="password" id="revisorPass" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn btn-info" style="width: 100%; margin-top: 1rem;">Ingresar al Panel de Revisión</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- ACCESO ADMIN -->
-        <div id="vista-login" style="display: none;">
-            <div class="login-box" id="boxLoginStandard">
-                <h3>Acceso Restringido</h3>
-                <p style="font-size: 0.88rem; color: var(--gray-text); margin-bottom: 1.5rem;">Autenticación para Administradores y Gestores.</p>
-                
-                <form onsubmit="verificarLogin(event)">
-                    <div class="form-group">
-                        <label>Tipo de Cuenta / Rol</label>
-                        <select id="loginRolSelect">
-                            <option value="admin">Comisión Académica / Administrador</option>
-                            <option value="gestor">Gestor / Estudiante Postulante</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Usuario o Correo Institucional</label>
-                        <input type="text" id="loginUser" required placeholder="Ingrese su usuario asignado">
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña</label>
-                        <input type="password" id="loginPass" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem; background-color: var(--uagrm-blue);">Ingresar al Sistema</button>
-                </form>
-                
-                <button class="link-recuperar" onclick="mostrarBoxRecuperar()">🔑 ¿Olvidaste la contraseña de Administrador?</button>
-            </div>
-
-            <!-- RECUPERACIÓN -->
-            <div class="login-box" id="boxLoginRecuperar" style="display: none;">
-                <h3 style="color: var(--uagrm-gold);">Recuperación de Administrador</h3>
-                <p style="font-size: 0.85rem; color: var(--gray-text); margin-bottom: 1.2rem;">Ingrese el correo de respaldo vinculado y la respuesta de seguridad.</p>
-                
-                <form onsubmit="procesarRecuperacion(event)">
-                    <div class="form-group">
-                        <label>Correo de Respaldo</label>
-                        <input type="email" id="recCorreoInput" required placeholder="ejemplo@uagrm.edu.bo">
-                    </div>
-                    <div class="form-group">
-                        <label>Pregunta de Seguridad Secreta:</label>
-                        <p style="font-size: 0.85rem; font-weight: 700; color: var(--uagrm-blue); margin-bottom: 0.4rem;" id="lblPreguntaSecreta">¿Código institucional?</p>
-                        <input type="text" id="recRespuestaInput" required placeholder="Respuesta secreta...">
-                    </div>
-                    <div class="form-group">
-                        <label>NUEVA Contraseña de Administrador</label>
-                        <input type="password" id="recNuevaClaveInput" required placeholder="Nueva contraseña...">
-                    </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 0.5rem;">Restablecer Contraseña Admin</button>
-                </form>
-                <button class="link-recuperar" onclick="ocultarBoxRecuperar()" style="margin-top: 1rem;">← Volver al Inicio de Sesión</button>
-            </div>
-        </div>
-
-        <!-- PANEL REVISOR -->
-        <div id="vista-revisor-panel" class="revisor-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 1rem;">
-                <div>
-                    <h3 style="color: var(--uagrm-accent); font-size: 1.3rem;">Panel de la Comisión Revisora y Tribunal</h3>
-                    <p style="font-size: 0.85rem; color: var(--gray-text);">Bandeja exclusiva para la evaluación de documentos.</p>
-                </div>
-                <button class="btn btn-danger" onclick="cerrarSesion()" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
-            </div>
-
-            <div id="avisoRevisionCerrada" style="display:none; background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; padding:1.5rem; border-radius:6px; margin-bottom:1.5rem; text-align:center;">
-                <h4>⚠️ Periodo de Revisión Cerrado</h4>
-                <p style="font-size:0.9rem;">La Comisión Académica ha deshabilitado temporalmente el periodo de revisión.</p>
-            </div>
-
-            <div id="contenedorTablaRevisor">
-                <table id="tablaRevisor">
-                    <thead>
-                        <tr>
-                            <th>Título / Autor</th>
-                            <th>Nivel / Modalidad</th>
-                            <th>Mención / Tipo Graduación</th>
-                            <th>Estado Actual</th>
-                            <th>Enlaces de Acceso</th>
-                            <th>Dictamen</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyRevisor"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- PANEL ADMIN -->
-        <div id="vista-admin" class="admin-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 1rem;">
-                <div>
-                    <h3 id="panel-bienvenida" style="color: var(--uagrm-blue); font-size: 1.3rem;">Panel de Control Institucional</h3>
-                    <p style="font-size: 0.85rem; color: var(--gray-text);">Gestión interna de metadatos, revisiones y configuración visual.</p>
-                </div>
-                <button class="btn btn-danger" onclick="cerrarSesion()" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
-            </div>
-            
-            <div class="admin-tabs">
-                <button class="tab-btn active" id="tab-btn-subir" onclick="cambiarTab('registros')">1. Registrar Documento / Masivo</button>
-                <button class="tab-btn" id="tab-btn-aprobar" onclick="cambiarTab('aprobacion')">2. Bandeja de Aprobación <span id="contador-pendientes" class="badge badge-warning">0</span></button>
-                <button class="tab-btn" id="tab-btn-apariencia" onclick="cambiarTab('apariencia')">3. Configuración y Seguridad</button>
-            </div>
-
-            <!-- TAB 1 -->
-            <div id="tab-registros">
-                <div id="avisoConvocatoriaCerrada" style="display:none; background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; padding:1.5rem; border-radius:6px; margin-bottom:2rem; text-align:center;">
-                    <h4 style="margin-bottom:0.3rem;">⚠️ Convocatoria de Postulación Cerrada</h4>
-                    <p style="font-size:0.9rem;">El acceso de gestores para enviar nuevos trabajos se encuentra <strong>deshabilitado</strong> temporalmente.</p>
-                </div>
-
-                <div id="contenedorFormularioRegistro">
-                    <div style="background: #EFF6FF; border: 1px solid #BFDBFE; padding: 1.5rem; border-radius: 6px; margin-bottom: 2rem;">
-                        <h4 style="color: var(--uagrm-blue); margin-bottom: 0.5rem;">⚡ Importación Masiva (Archivo CSV)</h4>
-                        <p style="font-size: 0.88rem; color: var(--gray-text); margin-bottom: 1rem;">Sube un archivo en formato <strong>.CSV</strong> separado por comas para registrar múltiples trabajos.</p>
-                        <input type="file" id="csvFileInput" accept=".csv" style="margin-bottom: 0.8rem; background: white; padding: 0.5rem;">
-                        <br>
-                        <button class="btn btn-info" onclick="importarCSV()" style="font-size: 0.85rem;">📂 Importar Archivo Masivo</button>
-                    </div>
-
-                    <hr style="border: none; border-top: 1px solid #E2E8F0; margin-bottom: 1.5rem;">
-                    <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">O Registro Individual Manual:</h4>
-
-                    <form id="formDocumento" onsubmit="guardarDocumento(event)">
-                        <div style="background: #F8FAFC; padding: 1.8rem; border-radius: 6px; border: 1px solid #E2E8F0;">
-                            <div class="form-group">
-                                <label>Título Oficial del Trabajo o Producción *</label>
-                                <input type="text" id="docTitulo" required placeholder="Ej: Estrategias metodológicas en el aula virtual">
-                            </div>
-                            <div class="form-group">
-                                <label>Autor(es) y Tutor Académico *</label>
-                                <input type="text" id="docAutor" required placeholder="Ej: Autor: Ana Rojas • Tutor: Dr. Carlos Bravo">
-                            </div>
-                            <div class="form-group">
-                                <label>Colección Institucional *</label>
-                                <select id="docColeccion" required>
-                                    <option value="Trabajos de titulación">Trabajos de titulación</option>
-                                    <option value="Producción científica">Producción científica</option>
-                                    <option value="Recursos para la enseñanza">Recursos para la enseñanza</option>
-                                </select>
-                            </div>
-                            
-                            <!-- NIVEL ACADÉMICO -->
-                            <div class="form-group">
-                                <label>Nivel de Titulación *</label>
-                                <select id="docNivel" required>
-                                    <option value="Licenciatura">Titulación a Nivel Licenciatura</option>
-                                    <option value="Técnico Superior (Salida Intermedia)">Titulación Intermedia (Técnico Superior)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Modalidad de Titulación</label>
-                                <select id="docModalidad">
-                                    <option value="N/A">Ninguna / No aplica</option>
-                                    <option value="Trabajo Dirigido">Trabajo Dirigido</option>
-                                    <option value="Tesis de Grado">Tesis de Grado</option>
-                                    <option value="Vía Diplomado">Vía Diplomado</option>
-                                    <option value="Proyecto de Grado">Proyecto de Grado</option>
-                                </select>
-                            </div>
-
-                            <!-- TIPO DE GRADUACIÓN Y VISIBILIDAD -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div class="form-group">
-                                    <label>Tipo de Graduación *</label>
-                                    <select id="docTipoGraduacion" required>
-                                        <option value="Regular">Graduación Regular (Defensa Pública)</option>
-                                        <option value="Directa">Graduación Directa (Excelencia Académica)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Visibilidad en el Portal Público *</label>
-                                    <select id="docVisibilidad" required>
-                                        <option value="Publico">Público (Visible en Repositorio Abierto)</option>
-                                        <option value="Interno">Interno (Solo Comisión / Sin vista pública)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Mención Académica de la Carrera</label>
-                                <select id="docMencion">
-                                    <option value="General">Ninguna / General</option>
-                                    <option value="Psicopedagogía">Psicopedagogía</option>
-                                    <option value="Tecnología Educativa">Tecnología Educativa</option>
-                                    <option value="Educación Social">Educación Social</option>
-                                </select>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div class="form-group">
-                                    <label>Gestión de Defensa / Presentación *</label>
-                                    <input type="number" id="docAnioPresentacion" required value="2025" placeholder="Ej: 2025">
-                                </div>
-                                <div class="form-group">
-                                    <label>Gestión de Carga en Repositorio *</label>
-                                    <input type="number" id="docAnioPublicacion" required value="2026" placeholder="Ej: 2026">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Resumen Académico (Abstract) *</label>
-                                <textarea id="docResumen" rows="3" required placeholder="Resumen del trabajo..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Palabras Clave (Separadas por comas)</label>
-                                <input type="text" id="docPalabrasClave" placeholder="Ej: tic, aprendizaje, evaluacion">
-                            </div>
-                            <div class="form-group">
-                                <label>Enlace de Google Drive del Documento PDF *</label>
-                                <input type="url" id="linkDrivePdf" required placeholder="https://drive.google.com/file/d/xxxxxxx/view">
-                            </div>
-                            <div class="form-group">
-                                <label>Enlace de Google Drive de la Carta de Autorización *</label>
-                                <input type="url" id="linkDriveAuth" required placeholder="https://drive.google.com/file/d/yyyyyyy/view">
-                            </div>
-                            <button type="submit" class="btn btn-success" style="font-size: 0.95rem; padding: 0.75rem 1.5rem;">Guardar y Enviar a Revisión</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- TAB 2: BANDEJA DE APROBACIÓN -->
-            <div id="tab-aprobacion" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.8rem;">
-                    <p style="color: var(--gray-text); margin: 0;">Supervise el estado general, trabajos internos/públicos y descargue reportes oficiales.</p>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-success" onclick="exportarExcel()" style="font-size: 0.85rem;">📥 Descargar Excel (CSV)</button>
-                        <button class="btn btn-info" onclick="exportarPDF()" style="font-size: 0.85rem; background-color: #0369A1;">🖨️ Descargar / Imprimir PDF</button>
-                    </div>
-                </div>
-                
-                <table id="tablaAprobacion">
-                    <thead>
-                        <tr>
-                            <th>Título / Autor</th>
-                            <th>Nivel / Modalidad</th>
-                            <th>Mención / Tipo Graduación</th>
-                            <th>Estado / Visibilidad</th>
-                            <th>Enlaces de Acceso</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyAprobacion"></tbody>
-                </table>
-            </div>
-
-            <!-- TAB 3 -->
-            <div id="tab-apariencia" style="display: none;">
-                <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">🛡️ Control de Convocatoria para Gestores / Postulantes</h4>
-                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <p style="font-size: 0.9rem; color: #166534; margin-bottom: 0.8rem;">Recepción de trabajos de gestores: <strong id="lblEstadoConvocatoria">ABIERTO</strong></p>
-                    <button id="btnAlternarConvocatoria" class="btn btn-success" onclick="alternarConvocatoria()">🔒 Cerrar Convocatoria Gestores</button>
-                </div>
-
-                <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">👁️ Control de Periodo para la Comisión Revisora / Tribunal</h4>
-                <div style="background: #EFF6FF; border: 1px solid #BFDBFE; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <p style="font-size: 0.9rem; color: #1E40AF; margin-bottom: 0.8rem;">Acceso de revisores al panel de evaluación: <strong id="lblEstadoRevision">ABIERTO</strong></p>
-                    <button id="btnAlternarRevision" class="btn btn-info" onclick="alternarRevision()">🔒 Cerrar Periodo de Revisores</button>
-                </div>
-
-                <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #E2E8F0;">
-
-                <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">🛡️ Vinculación de Respaldo para Recuperación de Administrador</h4>
-                <div style="background: #F0F9FF; border: 1px solid #BAE6FD; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <div class="form-group">
-                        <label>Correo Gmail / Institucional de Respaldo Oficial</label>
-                        <input type="email" id="inputCorreoRespaldo" value="educacion.uagrm@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Pregunta de Seguridad Secreta</label>
-                        <input type="text" id="inputPreguntaSecreta" value="¿Código institucional de la carrera de Educación?">
-                    </div>
-                    <div class="form-group">
-                        <label>Respuesta Secreta a la Pregunta</label>
-                        <input type="text" id="inputRespuestaSecreta" value="UAGRM2026">
-                    </div>
-                    <button class="btn btn-info" onclick="guardarDatosRecuperacion()">💾 Guardar Datos de Recuperación</button>
-                </div>
-
-                <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">🔑 Cambio de Contraseñas Directas</h4>
-                <div style="background: #FFFBEB; border: 1px solid #FCD34D; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <div class="form-group">
-                        <label>Nueva Contraseña para Administradores</label>
-                        <input type="password" id="inputNuevaClaveAdmin" placeholder="Nueva clave admin...">
-                    </div>
-                    <button class="btn" onclick="actualizarClave('admin')" style="background-color: var(--uagrm-blue); margin-bottom: 1rem;">Actualizar Clave Admin</button>
-
-                    <div class="form-group">
-                        <label>Nueva Contraseña para Revisores / Tribunal</label>
-                        <input type="password" id="inputNuevaClaveRevisor" placeholder="Nueva clave revisor...">
-                    </div>
-                    <button class="btn" onclick="actualizarClave('revisor')" style="background-color: var(--uagrm-accent); margin-bottom: 1rem;">Actualizar Clave Revisor</button>
-
-                    <div class="form-group">
-                        <label>Nueva Contraseña para Gestores / Postulantes</label>
-                        <input type="password" id="inputNuevaClaveGestor" placeholder="Nueva clave gestor...">
-                    </div>
-                    <button class="btn" onclick="actualizarClave('gestor')" style="background-color: var(--uagrm-gold);">Actualizar Clave Gestor</button>
-                </div>
-
-                <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #E2E8F0;">
-
-                <h4 style="color: var(--uagrm-blue); margin-bottom: 1rem;">🖼️ Configuración de Identidad y Logotipos</h4>
-                <div class="form-group">
-                    <label>Título Principal del Repositorio</label>
-                    <input type="text" id="inputTitulo" value="Repositorio Académico Institucional">
-                </div>
-                <div class="form-group">
-                    <label>Subtítulo / Presentación Institucional</label>
-                    <input type="text" id="inputSub" value="Catálogo científico y académico oficial de la Carrera de Ciencias de la Educación.">
-                </div>
-                <div class="form-group">
-                    <label>Color Institucional de Cabecera</label>
-                    <input type="color" id="inputColor" value="#0A2540" style="height: 42px; padding: 0; cursor: pointer;">
-                </div>
-
-                <div style="background: #F1F5F9; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <strong style="color: var(--uagrm-blue);">Logo 1 (Escudo UAGRM - Izquierda)</strong>
-                    <div class="form-group" style="margin-top: 0.8rem;">
-                        <label>Subir archivo local</label>
-                        <input type="file" id="fileLogoUagrm" accept="image/*" onchange="cargarLogoLocal(event, 'imgLogoUagrm')">
-                    </div>
-                    <div class="form-group">
-                        <label>O Enlace de Google Drive</label>
-                        <input type="url" id="inputUrlUagrm" placeholder="https://drive.google.com/file/d/.../view">
-                    </div>
-                </div>
-
-                <div style="background: #F1F5F9; padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                    <strong style="color: var(--uagrm-blue);">Logo 2 (Escudo Carrera - Derecha)</strong>
-                    <div class="form-group" style="margin-top: 0.8rem;">
-                        <label>Subir archivo local</label>
-                        <input type="file" id="fileLogoCarrera" accept="image/*" onchange="cargarLogoLocal(event, 'imgLogoCarrera')">
-                    </div>
-                    <div class="form-group">
-                        <label>O Enlace de Google Drive</label>
-                        <input type="url" id="inputUrlCarrera" placeholder="https://drive.google.com/file/d/.../view">
-                    </div>
-                </div>
-
-                <button class="btn" onclick="aplicarApariencia()" style="margin-top: 0.5rem; background-color: var(--uagrm-gold);">Aplicar Cambios de Identidad Visual</button>
-            </div>
-        </div>
+      <!-- LOGO DERECHA -->
+      <div class="bg-white p-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center justify-center shrink-0 w-28 h-24 transition transform hover:scale-105">
+        <img id="imgLogoDer" src="https://i.ibb.co/3W68QX7/uagrm-logo.png" alt="Ciencias de la Educación" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/80/ffffff/082240?text=EDU'">
+      </div>
 
     </div>
 
-    <footer>
-        <p><strong>Universidad Autónoma Gabriel René Moreno</strong> • Facultad de Humanidades</p>
-        <p>Carrera de Ciencias de la Educación • Comisión de Recursos Educacionales</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">Santa Cruz de la Sierra, Bolivia • Gestión 2026</p>
-    </footer>
+    <!-- BARRA DE NAVEGACIÓN SECUNDARIA / ROLES -->
+    <div class="bg-[#041224] border-t border-white/10 py-2.5 px-6 relative z-10">
+      <div class="container mx-auto flex flex-wrap justify-between items-center gap-2 text-xs">
+        <span class="text-slate-300 italic font-medium hidden md:flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-amber-400"></i> Plataforma oficial de gestión científica y académica de grado
+        </span>
+        <div class="flex items-center gap-2 flex-wrap ml-auto">
+          <button onclick="verPortal()" class="bg-[#082240] hover:bg-slate-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 border border-slate-600 shadow-sm">
+            <i class="fa-solid fa-book-open"></i> Portal Público
+          </button>
+          <button onclick="verBuzon()" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-comments"></i> Buzón de Consultas
+          </button>
+          <button onclick="verGestores()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-folder-plus"></i> Acceso Gestores
+          </button>
+          <button onclick="verRevisores()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-eye"></i> Revisores
+          </button>
+          <button onclick="verAdmin()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-lock"></i> Admin
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    <script>
-        let claveAdminActual = "admin2026";
-        let claveGestorActual = "gestor2026";
-        let claveRevisorActual = "revisor2026"; 
-        
-        let correoRespaldoAdmin = "educacion.uagrm@gmail.com";
-        let preguntaSecretaAdmin = "¿Código institucional de la carrera de Educación?";
-        let respuestaSecretaAdmin = "UAGRM2026";
+  <main class="container mx-auto px-4 py-6 flex-grow space-y-6">
 
-        let postulacionesAbiertas = true; 
-        let periodoRevisionAbierto = true; 
+    <!-- VISTA 1: PORTAL PÚBLICO -->
+    <div id="vistaPublica" class="space-y-6">
+      <nav class="flex text-xs text-slate-500 gap-2 items-center">
+        <a href="#" onclick="verPortal()" class="hover:text-sky-800 flex items-center gap-1"><i class="fa-solid fa-house"></i> Inicio</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">Repositorio</span>
+      </nav>
 
-        let repositorio = [
-            {
-                id: 1,
-                titulo: "Uso pedagógico de plataformas virtuales en el aprendizaje autónomo",
-                autor: "Carla Pérez • Tutor: Dr. Carlos Bravo",
-                coleccion: "Trabajos de titulación",
-                nivel: "Licenciatura",
-                modalidad: "Tesis de Grado",
-                tipoGraduacion: "Regular",
-                visibilidad: "Publico",
-                mencion: "Tecnología Educativa",
-                resumen: "Investigación orientada a evaluar el impacto de las herramientas digitales.",
-                palabrasClave: "plataformas, tic, aprendizaje",
-                estado: "Aprobado",
-                anioPresentacion: 2025,
-                anioPublicacion: 2026,
-                visitas: 14,
-                linkPdf: "https://drive.google.com",
-                linkAuth: "https://drive.google.com"
-            }
-        ];
+      <div class="text-center space-y-1 py-2">
+        <h2 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Explora el conocimiento de nuestra carrera</h2>
+        <p class="text-xs md:text-sm text-slate-500">Consulta y descubre la producción académica de Ciencias de la Educación.</p>
+      </div>
 
-        let rolActual = null; 
+      <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <div class="relative">
+          <input type="text" id="qPub" oninput="filtrarPub()" placeholder="Buscar por título, autor o palabras clave..." class="w-full pl-10 pr-28 py-3.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-sky-600 outline-none shadow-inner">
+          <i class="fa-solid fa-search absolute left-4 top-4 text-slate-400"></i>
+          <button onclick="filtrarPub()" class="absolute right-2 top-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-search"></i> Buscar
+          </button>
+        </div>
 
-        window.onload = function() {
-            renderizarVistaPublica();
-        };
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Nivel de Titulación</label>
+            <select id="fNivelPub" onchange="filtrarPub()" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl text-xs bg-slate-50 outline-none">
+              <option value="">Todos los Niveles</option>
+              <option value="Licenciatura">Licenciatura</option>
+              <option value="Técnico Superior">Técnico Superior</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Modalidad</label>
+            <select id="fModPub" onchange="filtrarPub()" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl text-xs bg-slate-50 outline-none">
+              <option value="">Todas las Modalidades</option>
+              <option value="Trabajo Dirigido">Trabajo Dirigido</option>
+              <option value="Tesis de Grado">Tesis de Grado</option>
+              <option value="Proyecto de Grado">Proyecto de Grado</option>
+              <option value="Vía Diplomado">Vía Diplomado</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Mención Académica</label>
+            <select id="fMenPub" onchange="filtrarPub()" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl text-xs bg-slate-50 outline-none">
+              <option value="">Todas las Menciones</option>
+              <option value="Psicopedagogía">Psicopedagogía</option>
+              <option value="Tecnología Educativa">Tecnología Educativa</option>
+              <option value="Educación Social">Educación Social</option>
+            </select>
+          </div>
+        </div>
+      </section>
 
-        function cambiarVista(vista) {
-            document.getElementById('vista-publica').style.display = 'none';
-            document.getElementById('vista-login').style.display = 'none';
-            document.getElementById('vista-login-revisor').style.display = 'none';
-            document.getElementById('vista-admin').style.display = 'none';
-            document.getElementById('vista-revisor-panel').style.display = 'none';
+      <div class="flex justify-between items-center bg-white px-5 py-3 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
+          <i class="fa-solid fa-book text-sky-800"></i> Catálogo de trabajos académicos
+        </h3>
+        <span id="cantPub" class="text-xs font-bold bg-sky-100 text-sky-900 px-3 py-1 rounded-full">0 registros</span>
+      </div>
 
-            if(vista === 'publico') {
-                document.getElementById('vista-publica').style.display = 'block';
-                renderizarVistaPublica();
-            } else if(vista === 'login') {
-                if(rolActual === 'admin' || rolActual === 'gestor') {
-                    mostrarPanelAdmin();
-                } else {
-                    document.getElementById('vista-login').style.display = 'block';
-                    ocultarBoxRecuperar();
-                }
-            } else if(vista === 'loginRevisor') {
-                if(rolActual === 'revisor') {
-                    mostrarPanelRevisor();
-                } else {
-                    document.getElementById('vista-login-revisor').style.display = 'block';
-                }
-            }
-        }
+      <div id="gridPub" class="space-y-6"></div>
+    </div>
 
-        function verificarLogin(e) {
-            e.preventDefault();
-            let rolSel = document.getElementById('loginRolSelect').value;
-            let u = document.getElementById('loginUser').value.trim();
-            let p = document.getElementById('loginPass').value.trim();
+    <!-- VISTA 3: BUZÓN -->
+    <div id="vistaBuzon" class="hidden space-y-6 max-w-3xl mx-auto">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b pb-3">
+          <h2 class="text-xl font-black text-slate-900"><i class="fa-solid fa-comments text-indigo-700 mr-2"></i> Buzón de Consultas, Dudas y Recomendaciones</h2>
+          <p class="text-xs text-slate-500">Reporta cualquier dificultad técnica, duda sobre los documentos o sugerencia para el seguimiento académico.</p>
+        </div>
 
-            if(rolSel === 'admin' && u === 'admin' && p === claveAdminActual) {
-                rolActual = 'admin';
-                alert("¡Sesión iniciada como Comisión Académica / Administrador!");
-                mostrarPanelAdmin();
-            } else if(rolSel === 'gestor' && u === 'gestor' && p === claveGestorActual) {
-                if(!postulacionesAbiertas) {
-                    alert("Acceso restringido: Las postulaciones están cerradas temporalmente.");
-                    return;
-                }
-                rolActual = 'gestor';
-                alert("¡Sesión iniciada como Gestor / Postulante!");
-                mostrarPanelAdmin();
-            } else {
-                alert("Acceso denegado: Usuario o contraseña incorrectos.");
-            }
-        }
+        <form onsubmit="enviarBuzon(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
+            <input type="text" id="buzonNombre" required class="w-full p-2.5 border rounded-lg text-sm" placeholder="Tu nombre...">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico *</label>
+            <input type="email" id="buzonEmail" required class="w-full p-2.5 border rounded-lg text-sm" placeholder="correo@uagrm.edu.bo">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Tipo de Mensaje *</label>
+            <select id="buzonTipo" class="w-full p-2.5 border rounded-lg text-sm">
+              <option value="Dificultad Técnica / Error">Dificultad Técnica / Error</option>
+              <option value="Consulta Académica">Consulta Académica</option>
+              <option value="Recomendación / Mejora">Recomendación o Sugerencia</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Mensaje o Detalle *</label>
+            <textarea id="buzonMensaje" rows="4" required class="w-full p-2.5 border rounded-lg text-sm" placeholder="Escribe aquí tu consulta..."></textarea>
+          </div>
+          <div class="flex justify-end gap-3">
+            <button type="button" onclick="verPortal()" class="bg-slate-200 font-bold px-4 py-2 rounded-lg text-xs">Volver</button>
+            <button type="submit" class="bg-indigo-700 hover:bg-indigo-800 text-white font-extrabold px-6 py-2.5 rounded-lg shadow text-xs">Enviar al Buzón</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-        function verificarLoginRevisor(e) {
-            e.preventDefault();
-            let u = document.getElementById('revisorUser').value.trim();
-            let p = document.getElementById('revisorPass').value.trim();
+    <!-- VISTA 2: PANEL DE ADMINISTRACIÓN / REVISIÓN / GESTOR -->
+    <div id="vistaAdmin" class="hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-4 mb-6">
+          <div>
+            <h2 id="tituloPanelAdmin" class="text-2xl font-black text-slate-900">Panel de la Comisión Académica</h2>
+            <p id="subtituloPanelAdmin" class="text-xs text-slate-500">Gestión interna de metadatos, revisiones y estadísticas.</p>
+          </div>
+          <button onclick="cerrarSesion()" class="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-lg text-xs shadow transition">
+            Cerrar Sesión
+          </button>
+        </div>
 
-            if(u === 'revisor' && p === claveRevisorActual) {
-                rolActual = 'revisor';
-                alert("¡Sesión iniciada como Comisión Revisora / Tribunal!");
-                mostrarPanelRevisor();
-            } else {
-                alert("Acceso denegado: Usuario o contraseña incorrectos.");
-            }
-        }
+        <div id="menuPestañasAdmin" class="flex border-b border-slate-200 mb-6 gap-6 text-sm font-bold overflow-x-auto">
+          <button id="tab1" onclick="switchTab(1)" class="pb-3 border-b-2 text-slate-500 hover:text-slate-800 whitespace-nowrap transition-all">
+            1. Registrar Documento / Masivo
+          </button>
+          <button id="tab2" onclick="switchTab(2)" class="pb-3 border-b-2 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap transition-all">
+            2. Bandeja de Evaluación y Aprobación <span id="badgeAprob" class="hidden bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+          </button>
+          <button id="tab4" onclick="switchTab(4)" class="pb-3 border-b-2 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap transition-all">
+            4. Reporte Estadístico y Buzón <span id="badgeBuzonPendiente" class="hidden bg-indigo-600 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+          </button>
+          <button id="tab3" onclick="switchTab(3)" class="pb-3 border-b-2 text-slate-500 hover:text-slate-800 whitespace-nowrap transition-all">
+            3. Configuración y Seguridad
+          </button>
+        </div>
 
-        function mostrarBoxRecuperar() {
-            document.getElementById('boxLoginStandard').style.display = 'none';
-            document.getElementById('boxLoginRecuperar').style.display = 'block';
-            document.getElementById('lblPreguntaSecreta').innerText = preguntaSecretaAdmin;
-        }
+        <!-- CONTENIDO PESTAÑA 1 -->
+        <div id="secTab1" class="space-y-6">
+          <!-- CARGA MASIVA CSV / EXCEL -->
+          <div id="boxCargaMasiva" class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+              <h3 class="font-bold text-emerald-900 text-sm mb-1"><i class="fa-solid fa-file-csv mr-1"></i> Carga Masiva desde Archivo CSV / Excel</h3>
+              <p class="text-xs text-emerald-700">Selecciona un archivo CSV para registrar múltiples fichas y trabajos académicos automáticamente en el sistema.</p>
+            </div>
+            <div class="flex gap-2 shrink-0">
+              <label class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-lg text-xs cursor-pointer inline-flex items-center gap-2 shadow">
+                <i class="fa-solid fa-upload"></i> Seleccionar archivo CSV
+                <input type="file" accept=".csv" onchange="importarCSV(event)" class="hidden">
+              </label>
+            </div>
+          </div>
 
-        function ocultarBoxRecuperar() {
-            document.getElementById('boxLoginStandard').style.display = 'block';
-            document.getElementById('boxLoginRecuperar').style.display = 'none';
-        }
+          <form id="formReg" onsubmit="guardarTrabajo(event)" class="space-y-4">
+            <input type="hidden" id="editId" value="">
+            <div class="flex justify-between items-center border-b pb-2">
+              <h3 id="formTitle" class="font-extrabold text-slate-800 text-base"><i class="fa-solid fa-file-circle-plus text-sky-800 mr-2"></i>FORMULARIO PARA NUEVO DOCUMENTO ACADÉMICO</h3>
+            </div>
 
-        function procesarRecuperacion(e) {
-            e.preventDefault();
-            let correoIngresado = document.getElementById('recCorreoInput').value.trim().toLowerCase();
-            let respuestaIngresada = document.getElementById('recRespuestaInput').value.trim();
-            let nuevaClave = document.getElementById('recNuevaClaveInput').value.trim();
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Título del Trabajo / Documento *</label>
+              <input type="text" id="regTitulo" required class="w-full p-2.5 border rounded-lg text-sm outline-none">
+            </div>
 
-            if(nuevaClave.length < 4) { alert("La nueva contraseña debe tener al menos 4 caracteres."); return; }
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Autor(es) *</label>
+                <input type="text" id="regAutor" required class="w-full p-2.5 border rounded-lg text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Tutor / Asesor *</label>
+                <input type="text" id="regTutor" required class="w-full p-2.5 border rounded-lg text-sm">
+              </div>
+            </div>
 
-            if(correoIngresado === correoRespaldoAdmin.toLowerCase() && respuestaIngresada.toLowerCase() === respuestaSecretaAdmin.toLowerCase()) {
-                claveAdminActual = nuevaClave;
-                alert("¡Verificación exitosa! La contraseña de Administrador ha sido restablecida.");
-                ocultarBoxRecuperar();
-                document.getElementById('loginPass').value = nuevaClave;
-            } else {
-                alert("Error de verificación: El correo de respaldo o la respuesta secreta no coinciden.");
-            }
-        }
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-sky-50/50 p-4 rounded-xl border border-sky-100">
+              <div>
+                <label class="block text-xs font-bold text-sky-950 mb-1">Gestión de Defensa *</label>
+                <input type="text" id="regGestionDef" required placeholder="Ej. I-2024" class="w-full p-2.5 border rounded-lg text-sm bg-white">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-sky-950 mb-1">Gestión de Carga *</label>
+                <input type="text" id="regGestionCarga" required value="2026" class="w-full p-2.5 border rounded-lg text-sm bg-white">
+              </div>
+            </div>
 
-        function guardarDatosRecuperacion() {
-            let correo = document.getElementById('inputCorreoRespaldo').value.trim();
-            let pregunta = document.getElementById('inputPreguntaSecreta').value.trim();
-            let respuesta = document.getElementById('inputRespuestaSecreta').value.trim();
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nivel *</label>
+                <select id="regNivel" class="w-full p-2.5 border rounded-lg text-sm">
+                  <option value="Licenciatura">Licenciatura</option>
+                  <option value="Técnico Superior">Técnico Superior</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Modalidad *</label>
+                <select id="regModalidad" class="w-full p-2.5 border rounded-lg text-sm">
+                  <option value="Trabajo Dirigido">Trabajo Dirigido</option>
+                  <option value="Tesis de Grado">Tesis de Grado</option>
+                  <option value="Proyecto de Grado">Proyecto de Grado</option>
+                  <option value="Vía Diplomado">Vía Diplomado</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Mención *</label>
+                <select id="regMencion" class="w-full p-2.5 border rounded-lg text-sm">
+                  <option value="Psicopedagogía">Psicopedagogía</option>
+                  <option value="Tecnología Educativa">Tecnología Educativa</option>
+                  <option value="Educación Social">Educación Social</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Colección *</label>
+                <select id="regColeccion" class="w-full p-2.5 border rounded-lg text-sm">
+                  <option value="Trabajos de titulación">Trabajos de titulación</option>
+                  <option value="Proyecto de Investigación">Proyecto de Investigación</option>
+                  <option value="Módulo Formativo / Guía">Módulo Formativo / Guía</option>
+                </select>
+              </div>
+            </div>
 
-            if(!correo || !pregunta || !respuesta) { alert("Complete todos los campos."); return; }
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Línea de Investigación Oficial *</label>
+              <select id="regLinea" required class="w-full p-2.5 border rounded-lg text-sm bg-white">
+                <optgroup label="── Líneas Específicas de Ciencias de la Educación ──">
+                  <option value="Didáctica, transformación curricular y evaluación educativa">1. Didáctica, transformación curricular y evaluación educativa</option>
+                  <option value="Tecnología educativa, inteligencia artificial y transformación digital">2. Tecnología educativa, inteligencia artificial y transformación digital</option>
+                  <option value="Formación docente, desarrollo profesional y calidad educativa">3. Formación docente, desarrollo profesional y calidad educativa</option>
+                  <option value="Inclusión, diversidad y equidad educativa">4. Inclusión, diversidad y equidad educativa</option>
+                  <option value="Desarrollo humano, bienestar, ciudadanía y sostenibilidad">5. Desarrollo humano, bienestar, ciudadanía y sostenibilidad</option>
+                  <option value="Gestión educativa, políticas públicas, gobernanza y vinculación socioprofesional">6. Gestión educativa, políticas públicas, gobernanza y vinculación socioprofesional</option>
+                  <option value="Educación, sociedad, familia y transformaciones socioculturales">7. Educación, sociedad, familia y transformaciones socioculturales</option>
+                </optgroup>
+                <optgroup label="── Líneas Facultativas (Humanidades / UAGRM) ──">
+                  <option value="Tecnologías y sociedad">Tecnologías y sociedad</option>
+                  <option value="Desarrollo y educación: contextos formales e informales">Desarrollo y educación: contextos formales e informales</option>
+                  <option value="Conocimientos e innovación tecnológica para el desarrollo humano">Conocimientos e innovación tecnológica para el desarrollo humano</option>
+                  <option value="Enfoques educativos y políticas públicas">Enfoques educativos y políticas públicas</option>
+                  <option value="Educación integral, formal y alternativa">Educación integral, formal y alternativa</option>
+                  <option value="Educación superior y desarrollo didáctico">Educación superior y desarrollo didáctico</option>
+                  <option value="Tecnología de la información y estrategias educativas (TIC, TAC y TEC)">Tecnología de la información y estrategias educativas (TIC, TAC y TEC)</option>
+                </optgroup>
+              </select>
+            </div>
 
-            correoRespaldoAdmin = correo;
-            preguntaSecretaAdmin = pregunta;
-            respuestaSecretaAdmin = respuesta;
-            alert("¡Datos de recuperación actualizados correctamente!");
-        }
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Resumen Extendido (Abstract) *</label>
+              <textarea id="regAbstract" rows="6" required placeholder="Escriba o pegue aquí el resumen completo y detallado del documento académico..." class="w-full p-3 border rounded-lg text-sm"></textarea>
+            </div>
 
-        function mostrarPanelRevisor() {
-            document.getElementById('vista-revisor-panel').style.display = 'block';
-            renderizarBandejaRevisor();
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Palabras Clave (Separadas por comas) *</label>
+              <input type="text" id="regKeywords" required class="w-full p-2.5 border rounded-lg text-sm">
+            </div>
 
-            if(!periodoRevisionAbierto) {
-                document.getElementById('avisoRevisionCerrada').style.display = 'block';
-                document.getElementById('contenedorTablaRevisor').style.display = 'none';
-            } else {
-                document.getElementById('avisoRevisionCerrada').style.display = 'none';
-                document.getElementById('contenedorTablaRevisor').style.display = 'block';
-            }
-        }
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Enlace PDF / Drive *</label>
+                <input type="url" id="regLinkPdf" required class="w-full p-2.5 border rounded-lg text-sm" placeholder="https://drive.google.com/...">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Enlace Autorización (Uso Interno) *</label>
+                <input type="url" id="regLinkCarta" required class="w-full p-2.5 border rounded-lg text-sm" placeholder="https://drive.google.com/...">
+              </div>
+            </div>
 
-        function renderizarBandejaRevisor() {
-            let tbody = document.getElementById('tbodyRevisor');
-            tbody.innerHTML = "";
+            <div id="boxVisibilidadForm">
+              <label class="block text-xs font-bold text-slate-700 mb-1">Estado / Visibilidad Inicial *</label>
+              <select id="regVisibilidad" class="w-full p-2.5 border rounded-lg text-sm">
+                <option value="Público (Visible en Repositorio Abierto)">Aprobado (Público)</option>
+                <option value="Interno (Solo Comisión / Sin vista pública)">Borrador / Solo Interno</option>
+              </select>
+            </div>
 
-            repositorio.forEach(doc => {
-                let tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${doc.titulo}</strong><br><small style="color:var(--gray-text);">${doc.autor}</small></td>
-                    <td><span class="badge">${doc.nivel}</span><br><small style="color:var(--gray-text);">${doc.modalidad}</small></td>
-                    <td><span class="badge badge-mencion">${doc.mencion}</span><br><small style="color:var(--gray-text);">Tipo: ${doc.tipoGraduacion}</small></td>
-                    <td>${doc.estado === 'Pendiente' ? '<span class="badge badge-warning">Pendiente</span>' : doc.estado === 'Aprobado' ? '<span class="badge badge-success">Aprobado</span>' : '<span class="badge" style="background:#FEE2E2; color:#991B1B;">Rechazado</span>'}</td>
-                    <td><a href="${doc.linkPdf}" target="_blank" class="btn btn-info" style="font-size:0.75rem; padding:0.3rem 0.6rem;">📄 Ver PDF</a></td>
-                    <td>
-                        ${doc.estado === 'Pendiente' ? `
-                            <button class="btn btn-success" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Aprobado')">✓ Aprobar</button>
-                            <button class="btn btn-danger" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Rechazado')">✕ Rechazar</button>
-                        ` : `<button class="btn" style="background:var(--gray-text); font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Pendiente')">Revisar</button>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
+            <div class="pt-4 flex justify-end gap-3">
+              <button type="button" onclick="cancelarEdicion()" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs">Cancelar</button>
+              <button type="submit" id="btnSubmitForm" class="bg-blue-900 hover:bg-blue-800 text-white font-extrabold px-6 py-2.5 rounded-lg shadow text-xs">Guardar Registro</button>
+            </div>
+          </form>
+        </div>
 
-        function alternarConvocatoria() {
-            postulacionesAbiertas = !postulacionesAbiertas;
-            let lbl = document.getElementById('lblEstadoConvocatoria');
-            let btn = document.getElementById('btnAlternarConvocatoria');
-            lbl.innerText = postulacionesAbiertas ? "ABIERTO" : "CERRADO";
-            lbl.style.color = postulacionesAbiertas ? "#166534" : "#991B1B";
-            btn.className = postulacionesAbiertas ? "btn btn-success" : "btn btn-danger";
-            btn.innerText = postulacionesAbiertas ? "🔒 Cerrar Convocatoria Gestores" : "🔓 Abrir Convocatoria Gestores";
-        }
+        <!-- CONTENIDO PESTAÑA 2: BANDEJA DE APROBACIÓN -->
+        <div id="secTab2" class="hidden space-y-4">
+          <div class="flex flex-wrap justify-between items-center bg-slate-50 p-4 rounded-xl border gap-3">
+            <p class="text-xs text-slate-600 font-semibold">Supervise y gestione la dictaminación de trabajos académicos (Aprobar, Observar o Rechazar).</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="exportarCSVInterno()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
+                <i class="fa-solid fa-file-excel"></i> Descargar Excel Interno Completo (Masivo)
+              </button>
+              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
+                <i class="fa-solid fa-print"></i> Imprimir Reporte PDF
+              </button>
+            </div>
+          </div>
 
-        function alternarRevision() {
-            periodoRevisionAbierto = !periodoRevisionAbierto;
-            let lbl = document.getElementById('lblEstadoRevision');
-            let btn = document.getElementById('btnAlternarRevision');
-            lbl.innerText = periodoRevisionAbierto ? "ABIERTO" : "CERRADO";
-            lbl.style.color = periodoRevisionAbierto ? "#1E40AF" : "#991B1B";
-            btn.className = periodoRevisionAbierto ? "btn btn-info" : "btn btn-danger";
-            btn.innerText = periodoRevisionAbierto ? "🔒 Cerrar Periodo de Revisores" : "🔓 Abrir Periodo de Revisores";
-        }
+          <div class="overflow-x-auto border rounded-xl">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-700 font-extrabold border-b">
+                <tr>
+                  <th class="p-3">TÍTULO / AUTOR / TUTOR</th>
+                  <th class="p-3">NIVEL / MODALIDAD</th>
+                  <th class="p-3">MENCIÓN / LÍNEA</th>
+                  <th class="p-3">ESTADO / EVALUACIÓN</th>
+                  <th class="p-3">ENLACES ACCESO</th>
+                  <th class="p-3">ACCIONES DE REVISIÓN</th>
+                </tr>
+              </thead>
+              <tbody id="tablaAdmin" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
 
-        function actualizarClave(tipo) {
-            let campo = tipo === 'admin' ? 'inputNuevaClaveAdmin' : tipo === 'revisor' ? 'inputNuevaClaveRevisor' : 'inputNuevaClaveGestor';
-            let nueva = document.getElementById(campo).value.trim();
-            if(nueva.length < 4) { alert("Debe tener al menos 4 caracteres."); return; }
-            if(tipo === 'admin') claveAdminActual = nueva;
-            if(tipo === 'revisor') claveRevisorActual = nueva;
-            if(tipo === 'gestor') claveGestorActual = nueva;
-            document.getElementById(campo).value = "";
-            alert(`¡Contraseña de ${tipo} actualizada exitosamente!`);
-        }
+        <!-- CONTENIDO PESTAÑA 4: ESTADÍSTICAS Y BUZÓN -->
+        <div id="secTab4" class="hidden space-y-6">
+          <div class="flex justify-between items-center border-b pb-3 flex-wrap gap-3">
+            <h3 class="font-extrabold text-slate-900 text-lg"><i class="fa-solid fa-chart-line text-sky-700 mr-2"></i> Reporte Estadístico y Seguimiento de Consultas</h3>
+            <div class="flex gap-2">
+              <button onclick="exportarExcelEstadisticas()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-file-excel"></i> Descargar Estadísticas en Excel
+              </button>
+              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-file-pdf"></i> Imprimir / PDF Estadísticas
+              </button>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-sky-900 uppercase">Visitas Generales a la Página</p>
+              <p id="statVisitasWeb" class="text-3xl font-black text-sky-800">0</p>
+              <p class="text-[10px] text-slate-500">Sesiones o accesos registrados al portal</p>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-emerald-900 uppercase">Documentos Recopilados</p>
+              <p id="statTotalDocs" class="text-3xl font-black text-emerald-800">0</p>
+              <p class="text-[10px] text-slate-500">Registros académicos en la base de datos</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-amber-900 uppercase">Total Consultas a Documentos</p>
+              <p id="statTotalConsultas" class="text-3xl font-black text-amber-800">0</p>
+              <p class="text-[10px] text-slate-500">Clics totales en PDFs del repositorio</p>
+            </div>
+          </div>
 
-        function exportarExcel() {
-            if(repositorio.length === 0) { alert("No hay registros."); return; }
-            let csv = "\uFEFFTitulo,Autor,Coleccion,Nivel,Modalidad,Tipo Graduacion,Visibilidad,Mencion,Gestion,Estado\n";
-            repositorio.forEach(d => {
-                csv += `"${d.titulo}","${d.autor}","${d.coleccion}","${d.nivel}","${d.modalidad}","${d.tipoGraduacion}","${d.visibilidad}","${d.mencion}",${d.anioPresentacion},"${d.estado}"\n`;
-            });
-            let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            let link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "Reporte_Repositorio_Ciencias_Educacion.csv";
-            link.click();
-        }
+          <div class="space-y-3 pt-4">
+            <h4 class="font-bold text-slate-900 text-sm">Detalle de Consultas por Documento</h4>
+            <div class="overflow-x-auto border rounded-xl">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 text-slate-700 font-extrabold border-b">
+                  <tr>
+                    <th class="p-3">Título del Trabajo</th>
+                    <th class="p-3">Autor</th>
+                    <th class="p-3 text-center">Consultas / Accesos</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaEstadisticasDocs" class="divide-y divide-slate-200"></tbody>
+              </table>
+            </div>
+          </div>
 
-        function exportarPDF() {
-            let ventana = window.open('', '_blank');
-            let html = `
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Reporte Oficial de Revisiones</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 2rem; color: #1E293B; }
-                        h2 { color: #0A2540; text-align: center; margin-bottom: 0.2rem; }
-                        p.sub { text-align: center; color: #64748B; font-size: 0.9rem; margin-bottom: 2rem; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.82rem; }
-                        th, td { border: 1px solid #CBD5E1; padding: 8px 10px; text-align: left; }
-                        th { background-color: #0A2540; color: white; }
-                    </style>
-                </head>
-                <body>
-                    <h2>UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</h2>
-                    <p class="sub">Facultad de Humanidades • Carrera de Ciencias de la Educación<br><strong>Reporte de Estado de Revisiones y Trabajos</strong></p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Título del Trabajo</th>
-                                <th>Autor</th>
-                                <th>Nivel / Modalidad</th>
-                                <th>Graduación</th>
-                                <th>Mención</th>
-                                <th>Estado / Vista</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            repositorio.forEach(d => {
-                html += `
-                    <tr>
-                        <td><strong>${d.titulo}</strong></td>
-                        <td>${d.autor}</td>
-                        <td>${d.nivel} (${d.modalidad})</td>
-                        <td>${d.tipoGraduacion}</td>
-                        <td>${d.mencion}</td>
-                        <td><strong>${d.estado}</strong> (${d.visibilidad})</td>
-                    </tr>
-                `;
-            });
-            html += `
-                        </tbody>
-                    </table>
-                    <script>
-                        window.onload = function() { window.print(); }
-                    <\/script>
-                </body>
-                </html>
-            `;
-            ventana.document.write(html);
-            ventana.document.close();
-        }
+          <div class="space-y-3 pt-6 border-t">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-comments text-indigo-700"></i> Buzón Recibido & Seguimiento de Mensajes (<span id="countBuzonBadge">0</span>)
+            </h4>
+            <div id="listaBuzonAdmin" class="space-y-3"></div>
+          </div>
+        </div>
 
-        function mostrarPanelAdmin() {
-            document.getElementById('vista-admin').style.display = 'block';
-            renderizarBandejaAprobacion();
+        <!-- CONTENIDO PESTAÑA 3: CONFIGURACIÓN -->
+        <div id="secTab3" class="hidden space-y-6">
+          <h3 class="font-extrabold text-slate-900 text-lg border-b pb-3">CONFIGURACIÓN DE IDENTIDAD, CONVOCATORIAS Y SEGURIDAD</h3>
 
-            if(rolActual === 'gestor') {
-                document.getElementById('tab-btn-aprobar').style.display = 'none';
-                document.getElementById('tab-btn-apariencia').style.display = 'none';
-                document.getElementById('panel-bienvenida').innerText = "Panel del Postulante (Registro de Trabajos)";
-                document.getElementById('avisoConvocatoriaCerrada').style.display = postulacionesAbiertas ? 'none' : 'block';
-                document.getElementById('contenedorFormularioRegistro').style.display = postulacionesAbiertas ? 'block' : 'none';
-                cambiarTab('registros');
-            } else {
-                document.getElementById('tab-btn-aprobar').style.display = 'inline-block';
-                document.getElementById('tab-btn-apariencia').style.display = 'inline-block';
-                document.getElementById('panel-bienvenida').innerText = "Panel de la Comisión Académica";
-                document.getElementById('avisoConvocatoriaCerrada').style.display = 'none';
-                document.getElementById('contenedorFormularioRegistro').style.display = 'block';
-            }
-        }
+          <!-- CONTROL DE CONVOCATORIAS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl space-y-2">
+              <h4 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved text-emerald-700"></i> Convocatoria Gestores / Postulantes
+              </h4>
+              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoGestores" class="text-emerald-700 font-extrabold">ABIERTO</strong></p>
+              <button onclick="toggleGestores()" id="btnGestores" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
+                Cerrar Convocatoria Gestores
+              </button>
+            </div>
 
-        function cerrarSesion() {
-            rolActual = null;
-            alert("Sesión cerrada correctamente.");
-            cambiarVista('publico');
-        }
+            <div class="bg-sky-50/60 border border-sky-200 p-4 rounded-xl space-y-2">
+              <h4 class="font-bold text-sky-950 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-eye text-sky-700"></i> Periodo Comisión Revisora / Tribunal
+              </h4>
+              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoRevisores" class="text-sky-700 font-extrabold">ABIERTO</strong></p>
+              <button onclick="toggleRevisores()" id="btnRevisores" class="bg-sky-700 hover:bg-sky-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
+                Cerrar Periodo Revisores
+              </button>
+            </div>
+          </div>
 
-        function cambiarTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-registros').style.display = 'none';
-            document.getElementById('tab-aprobacion').style.display = 'none';
-            document.getElementById('tab-apariencia').style.display = 'none';
-
-            if(tab === 'registros') {
-                document.getElementById('tab-registros').style.display = 'block';
-                document.getElementById('tab-btn-subir').classList.add('active');
-            } else if(tab === 'aprobacion' && rolActual === 'admin') {
-                document.getElementById('tab-aprobacion').style.display = 'block';
-                document.getElementById('tab-btn-aprobar').classList.add('active');
-            } else if(tab === 'apariencia' && rolActual === 'admin') {
-                document.getElementById('tab-apariencia').style.display = 'block';
-                document.getElementById('tab-btn-apariencia').classList.add('active');
-            }
-        }
-
-        function guardarDocumento(e) {
-            e.preventDefault();
-            let nuevoDoc = {
-                id: Date.now(),
-                titulo: document.getElementById('docTitulo').value,
-                autor: document.getElementById('docAutor').value,
-                coleccion: document.getElementById('docColeccion').value,
-                nivel: document.getElementById('docNivel').value,
-                modalidad: document.getElementById('docModalidad').value,
-                tipoGraduacion: document.getElementById('docTipoGraduacion').value,
-                visibilidad: document.getElementById('docVisibilidad').value,
-                mencion: document.getElementById('docMencion').value,
-                resumen: document.getElementById('docResumen').value,
-                palabrasClave: document.getElementById('docPalabrasClave').value,
-                anioPresentacion: parseInt(document.getElementById('docAnioPresentacion').value) || 2025,
-                anioPublicacion: parseInt(document.getElementById('docAnioPublicacion').value) || 2026,
-                visitas: 0,
-                linkPdf: document.getElementById('linkDrivePdf').value,
-                linkAuth: document.getElementById('linkDriveAuth').value,
-                estado: "Pendiente"
-            };
-
-            repositorio.push(nuevoDoc);
-            alert("¡Éxito! El documento ha sido guardado y enviado a revisión.");
-            document.getElementById('formDocumento').reset();
+          <!-- IDENTIDAD VISUAL -->
+          <div class="bg-sky-50/50 border border-sky-200 p-5 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sky-950 text-sm"><i class="fa-solid fa-palette text-sky-700"></i> Identidad Visual y Encabezado</h4>
             
-            if(rolActual === 'admin') {
-                renderizarBandejaAprobacion();
-                cambiarTab('aprobacion');
-            } else {
-                cambiarVista('publico');
-            }
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Título Principal del Repositorio</label>
+                <input type="text" id="cfgTituloPrincipal" class="w-full p-2.5 border rounded-lg text-xs bg-white font-bold" value="CARRERA DE CIENCIAS DE LA EDUCACIÓN">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Subtítulo Institucional</label>
+                <input type="text" id="cfgSubTitulo" class="w-full p-2.5 border rounded-lg text-xs bg-white" value="Repositorio Académico Digital">
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-white border rounded-xl shadow-sm">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Color Título Principal</label>
+                  <input type="color" id="cfgColorTitulo" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#fbbf24">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Color Subtítulos / Textos</label>
+                  <input type="color" id="cfgColorSub" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#ffffff">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Color de Fondo Liso (Hex)</label>
+                  <input type="color" id="cfgColorHex" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#082240">
+                </div>
+              </div>
+
+              <div class="p-3 bg-white border rounded-xl space-y-2">
+                <label class="block text-xs font-bold text-slate-700"><i class="fa-solid fa-image text-sky-700"></i> Imagen de Fondo del Encabezado (Opcional)</label>
+                <div class="flex items-center gap-3 flex-wrap">
+                  <label class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-upload"></i> Subir Fondo desde PC
+                    <input type="file" accept="image/*" onchange="subirFondoLocal(event)" class="hidden">
+                  </label>
+                  <button type="button" onclick="quitarFondoLocal()" class="bg-amber-100 text-amber-800 hover:bg-amber-200 font-bold px-3 py-1.5 rounded-lg text-xs border border-amber-300">
+                    <i class="fa-solid fa-rotate-left"></i> Usar Color Liso (Quitar Imagen)
+                  </button>
+                </div>
+                <input type="hidden" id="cfgFondoUrl" value="">
+              </div>
+
+              <div class="p-3 bg-white border rounded-xl space-y-2">
+                <label class="block text-xs font-bold text-slate-800"><i class="fa-solid fa-image text-sky-700 mr-1"></i> Logo 1 (Escudo UAGRM - Izquierda)</label>
+                <label class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-upload"></i> Subir desde PC
+                  <input type="file" accept="image/*" onchange="subirLogoLocal(event, 'izq')" class="hidden">
+                </label>
+                <input type="url" id="cfgLogoIzqUrl" class="w-full p-2 border rounded-lg text-xs bg-slate-50" placeholder="https://...">
+              </div>
+
+              <div class="p-3 bg-white border rounded-xl space-y-2">
+                <label class="block text-xs font-bold text-slate-800"><i class="fa-solid fa-image text-sky-700 mr-1"></i> Logo 2 (Escudo Carrera - Derecha)</label>
+                <label class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-upload"></i> Subir desde PC
+                  <input type="file" accept="image/*" onchange="subirLogoLocal(event, 'der')" class="hidden">
+                </label>
+                <input type="url" id="cfgLogoDerUrl" class="w-full p-2 border rounded-lg text-xs bg-slate-50" placeholder="https://...">
+              </div>
+
+              <button onclick="guardarConfigIdentidad()" class="bg-sky-700 hover:bg-sky-800 text-white font-bold px-4 py-2 rounded-lg text-xs shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar y Aplicar Identidad
+              </button>
+            </div>
+          </div>
+
+          <!-- RESGUARDO Y RECUPERACIÓN -->
+          <div class="bg-sky-50/30 border border-sky-200 p-4 rounded-xl space-y-3">
+            <h4 class="font-bold text-sky-950 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-shield text-sky-700"></i> Vinculación de Respaldo para Recuperación de Administrador
+            </h4>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Correo de Resguardo Oficial</label>
+              <input type="email" id="cfgEmailResguardo" value="educacion.uagrm@gmail.com" class="w-full p-2 border rounded-lg text-xs bg-white">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Pregunta de Seguridad Secreta</label>
+              <input type="text" id="cfgPreguntaSeguridad" value="¿Código institucional de la carrera de Educación?" class="w-full p-2 border rounded-lg text-xs bg-white">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Respuesta Secreta</label>
+              <input type="text" id="cfgRespuestaSeguridad" value="UAGRM2026" class="w-full p-2 border rounded-lg text-xs bg-white">
+            </div>
+            <button onclick="guardarRecuperacion()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold px-4 py-2 rounded-lg text-xs shadow">
+              Guardar Datos de Recuperación
+            </button>
+          </div>
+
+          <!-- CAMBIO DE CONTRASEÑAS -->
+          <div class="bg-amber-50/40 border border-amber-200 p-4 rounded-xl space-y-4">
+            <h4 class="font-bold text-amber-950 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-key text-amber-600"></i> Cambio de Contraseñas Directas
+            </h4>
+            <div class="space-y-2">
+              <label class="block text-[11px] font-bold text-slate-600">Nueva Contraseña Admin</label>
+              <div class="flex gap-2">
+                <input type="password" id="pwdAdmin" placeholder="Nueva clave..." class="p-2 border rounded text-xs w-full bg-white">
+                <button onclick="cambiarClave('admin')" class="bg-slate-900 text-white font-bold px-4 py-2 rounded text-xs whitespace-nowrap">Actualizar Admin</button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-[11px] font-bold text-slate-600">Nueva Contraseña Revisor</label>
+              <div class="flex gap-2">
+                <input type="password" id="pwdRevisor" placeholder="Nueva clave..." class="p-2 border rounded text-xs w-full bg-white">
+                <button onclick="cambiarClave('revisor')" class="bg-sky-600 text-white font-bold px-4 py-2 rounded text-xs whitespace-nowrap">Actualizar Revisor</button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-[11px] font-bold text-slate-600">Nueva Contraseña Gestor</label>
+              <div class="flex gap-2">
+                <input type="password" id="pwdGestor" placeholder="Nueva clave..." class="p-2 border rounded text-xs w-full bg-white">
+                <button onclick="cambiarClave('gestor')" class="bg-amber-600 text-white font-bold px-4 py-2 rounded text-xs whitespace-nowrap">Actualizar Gestor</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 border p-4 rounded-xl space-y-2">
+            <h4 class="font-bold text-slate-900 text-xs">Copia de Seguridad</h4>
+            <button onclick="exportarJSON()" class="bg-slate-900 text-white font-bold px-4 py-2 rounded text-xs"><i class="fa-solid fa-download"></i> Exportar Resguardo JSON</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PIE DE PÁGINA INSTITUCIONAL CON LICENCIA CC BY-NC-ND 4.0 -->
+  <footer class="bg-[#041224] text-white border-t-4 border-amber-400 py-8 mt-auto">
+    <div class="container mx-auto px-6 space-y-6">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left border-b border-white/10 pb-6">
+        <div class="flex items-center gap-4">
+          <img id="imgFooterIzq" src="https://i.ibb.co/3W68QX7/uagrm-logo.png" alt="UAGRM" class="h-12 w-auto bg-white p-1 rounded-lg">
+          <div>
+            <p class="font-black text-amber-400 text-sm">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
+            <p class="text-xs text-slate-300 font-semibold">Facultad de Humanidades • Carrera de Ciencias de la Educación</p>
+            <p class="text-[11px] text-slate-400">Santa Cruz de la Sierra, Bolivia</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="text-right hidden md:block">
+            <p class="text-xs font-bold text-slate-200">Repositorio Académico Digital (RAD)</p>
+            <p class="text-[11px] text-slate-400">Acceso Abierto a la Producción Científica</p>
+          </div>
+          <img id="imgFooterDer" src="https://i.ibb.co/3W68QX7/uagrm-logo.png" alt="Ciencias de la Educación" class="h-12 w-auto bg-white p-1 rounded-lg">
+        </div>
+      </div>
+
+      <!-- SECCIÓN LICENCIA CC BY-NC-ND 4.0 -->
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-300 text-center md:text-left">
+        <div class="space-y-1">
+          <p class="flex items-center justify-center md:justify-start gap-2 font-bold text-amber-300">
+            <i class="fa-solid fa-copyleft"></i> Derechos Reservados © 2026 • Carrera de Ciencias de la Educación (UAGRM)
+          </p>
+          <p class="text-[11px] text-slate-400 max-w-2xl leading-relaxed">
+            Se permite la consulta pública de las obras contenidas en este repositorio para fines académicos y educativos. Bajo los términos de la autorización explícita, se aplica estrictamente la licencia especificada.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-xl border border-white/10 shrink-0">
+          <i class="fa-creative-commons text-2xl text-amber-400"></i>
+          <i class="fa-creative-commons-by text-xl text-slate-300"></i>
+          <i class="fa-creative-commons-nc text-xl text-slate-300"></i>
+          <i class="fa-creative-commons-nd text-xl text-slate-300"></i>
+          <div class="text-left text-[10px] leading-tight text-slate-300">
+            <p class="font-bold text-white">Licencia CC BY-NC-ND 4.0</p>
+            <p>Atribución - NoComercial - SinDerivadas</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    let db = JSON.parse(localStorage.getItem('rad_db_uagrm')) || [
+      {
+        id: 1,
+        titulo: "Fortalecer procesos de aprendizaje de la lecto escritura, contrarrestando dificultades de tipo disgráfico evolutivo mixto en estudiantes de 1ero de primaria de la U.E. Adelaida Landívar Moreno en Portachuelo, Santa Cruz",
+        autor: "Iris Castro Cáceres",
+        tutor: "MSc. Elizabeth Palenque Cortés",
+        nivel: "Licenciatura",
+        modalidad: "Trabajo Dirigido",
+        mencion: "Psicopedagogía",
+        coleccion: "Trabajos de titulación",
+        linea: "Didáctica, transformación curricular y evaluación educativa",
+        gestionDef: "2024",
+        gestionCarga: "2026",
+        estadoEvaluacion: "Aprobado (Público)",
+        abstract: "El presente Trabajo Dirigido aborda de manera integral una problemática frecuente en los primeros años de escolaridad: las dificultades en los procesos de adquisición y consolidación de la lectoescritura asociadas a la disgrafía evolutiva mixta. Desarrollado en la Unidad Educativa Adelaida Landívar Moreno del municipio de Portachuelo, Santa Cruz, el estudio implementó una propuesta de intervención psicopedagógica fundamentada en estrategias didácticas y lúdicas contextualizadas. Los resultados evidencian avances significativos en la coordinación visomotora, la direccionalidad del trazo y la fluidez escritora de los estudiantes, aportando un referente metodológico aplicable al contexto educativo regional.",
+        keywords: "lectoescritura, disgrafía, intervención psicopedagógica, educación primaria",
+        linkPdf: "https://drive.google.com/file/d/1iz-DjRamNYwAcQlykI-mdMOI5Jduuj7q/view",
+        linkCarta: "https://drive.google.com/file/d/1iz-DjRamNYwAcQlykI-mdMOI5Jduuj7q/view",
+        visibilidad: "Público (Visible en Repositorio Abierto)",
+        consultas: 0
+      }
+    ];
+
+    let claves = JSON.parse(localStorage.getItem('rad_keys')) || { admin: 'admin123', revisor: 'revisor123', gestor: 'gestor123' };
+    let recuperacionConfig = JSON.parse(localStorage.getItem('rad_recuperacion')) || { email: 'educacion.uagrm@gmail.com', pregunta: '¿Código institucional de la carrera de Educación?', respuesta: 'UAGRM2026' };
+    let convocatorias = JSON.parse(localStorage.getItem('rad_convocatorias')) || { gestores: true, revisores: true };
+    let buzonList = JSON.parse(localStorage.getItem('rad_buzon')) || [];
+    let visitasWeb = Number(localStorage.getItem('rad_visitas_web')) || 1;
+    
+    visitasWeb++;
+    localStorage.setItem('rad_visitas_web', visitasWeb);
+
+    let identidadConfig = JSON.parse(localStorage.getItem('rad_identidad')) || {
+      tituloPrincipal: "CARRERA DE CIENCIAS DE LA EDUCACIÓN",
+      subTitulo: "Repositorio Académico Digital",
+      colorHex: "#082240",
+      colorTitulo: "#fbbf24",
+      colorSub: "#ffffff",
+      fondoUrl: "",
+      logoIzqUrl: "https://i.ibb.co/3W68QX7/uagrm-logo.png",
+      logoDerUrl: "https://i.ibb.co/3W68QX7/uagrm-logo.png"
+    };
+
+    let rolActual = 'publico';
+
+    function aplicarIdentidadVisual() {
+      const hTitulo = document.getElementById('headTituloPrincipal');
+      const hBadge = document.getElementById('headBadgeCarrera');
+      const hUniv = document.getElementById('headUniv');
+      const hFac = document.getElementById('headFac');
+
+      hTitulo.innerText = identidadConfig.tituloPrincipal;
+      hBadge.innerText = identidadConfig.subTitulo;
+
+      hTitulo.style.color = identidadConfig.colorTitulo || "#fbbf24";
+      if(hBadge) hBadge.style.color = identidadConfig.colorSub || "#ffffff";
+      if(hUniv) hUniv.style.color = identidadConfig.colorSub || "#ffffff";
+      if(hFac) hFac.style.color = identidadConfig.colorSub || "#ffffff";
+
+      const headerBar = document.getElementById('headerBar');
+      const headerOverlay = document.getElementById('headerOverlay');
+
+      if (identidadConfig.fondoUrl && identidadConfig.fondoUrl.trim() !== "") {
+        headerBar.style.backgroundImage = `url('${identidadConfig.fondoUrl}')`;
+        headerBar.style.backgroundColor = 'transparent';
+        headerOverlay.className = "absolute inset-0 bg-[#082240]/40 pointer-events-none";
+      } else {
+        headerBar.style.backgroundImage = 'none';
+        headerBar.style.backgroundColor = identidadConfig.colorHex || "#082240";
+        headerOverlay.className = "absolute inset-0 bg-transparent pointer-events-none";
+      }
+      
+      document.getElementById('imgLogoIzq').src = identidadConfig.logoIzqUrl;
+      document.getElementById('imgLogoDer').src = identidadConfig.logoDerUrl;
+      document.getElementById('imgFooterIzq').src = identidadConfig.logoIzqUrl;
+      document.getElementById('imgFooterDer').src = identidadConfig.logoDerUrl;
+
+      if(document.getElementById('cfgTituloPrincipal')) {
+        document.getElementById('cfgTituloPrincipal').value = identidadConfig.tituloPrincipal;
+        document.getElementById('cfgSubTitulo').value = identidadConfig.subTitulo;
+        document.getElementById('cfgColorHex').value = identidadConfig.colorHex || "#082240";
+        document.getElementById('cfgColorTitulo').value = identidadConfig.colorTitulo || "#fbbf24";
+        document.getElementById('cfgColorSub').value = identidadConfig.colorSub || "#ffffff";
+        document.getElementById('cfgLogoIzqUrl').value = identidadConfig.logoIzqUrl;
+        document.getElementById('cfgLogoDerUrl').value = identidadConfig.logoDerUrl;
+        document.getElementById('cfgFondoUrl').value = identidadConfig.fondoUrl || '';
+      }
+    }
+
+    function subirLogoLocal(event, lado) {
+      const archivo = event.target.files[0];
+      if (!archivo) return;
+      const lector = new FileReader();
+      lector.onload = function(e) {
+        if(lado === 'izq') {
+          document.getElementById('cfgLogoIzqUrl').value = e.target.result;
+          identidadConfig.logoIzqUrl = e.target.result;
+        } else {
+          document.getElementById('cfgLogoDerUrl').value = e.target.result;
+          identidadConfig.logoDerUrl = e.target.result;
         }
+        alert('¡Logo cargado!');
+      };
+      lector.readAsDataURL(archivo);
+    }
 
-        function importarCSV() {
-            let fileInput = document.getElementById('csvFileInput');
-            if(fileInput.files.length === 0) { alert("Seleccione un archivo CSV primero."); return; }
+    function subirFondoLocal(event) {
+      const archivo = event.target.files[0];
+      if (!archivo) return;
+      const lector = new FileReader();
+      lector.onload = function(e) {
+        document.getElementById('cfgFondoUrl').value = e.target.result;
+        identidadConfig.fondoUrl = e.target.result;
+        alert('¡Fondo cargado!');
+      };
+      lector.readAsDataURL(archivo);
+    }
 
-            let file = fileInput.files[0];
-            let reader = new FileReader();
+    function quitarFondoLocal() {
+      document.getElementById('cfgFondoUrl').value = '';
+      identidadConfig.fondoUrl = '';
+      alert('Se usará color liso.');
+    }
 
-            reader.onload = function(e) {
-                let texto = e.target.result;
-                let lineas = texto.split("\n");
-                let contador = 0;
+    function guardarConfigIdentidad() {
+      identidadConfig.tituloPrincipal = document.getElementById('cfgTituloPrincipal').value;
+      identidadConfig.subTitulo = document.getElementById('cfgSubTitulo').value;
+      identidadConfig.colorHex = document.getElementById('cfgColorHex').value;
+      identidadConfig.colorTitulo = document.getElementById('cfgColorTitulo').value;
+      identidadConfig.colorSub = document.getElementById('cfgColorSub').value;
+      identidadConfig.logoIzqUrl = document.getElementById('cfgLogoIzqUrl').value;
+      identidadConfig.logoDerUrl = document.getElementById('cfgLogoDerUrl').value;
+      identidadConfig.fondoUrl = document.getElementById('cfgFondoUrl').value;
 
-                for(let i = 1; i < lineas.length; i++) {
-                    let linea = lineas[i].trim();
-                    if(!linea) continue;
-                    let cols = linea.split(",");
-                    if(cols.length >= 8) {
-                        repositorio.push({
-                            id: Date.now() + i,
-                            titulo: cols[0].trim(),
-                            autor: cols[1].trim(),
-                            coleccion: cols[2].trim(),
-                            nivel: "Licenciatura",
-                            modalidad: cols[3].trim(),
-                            tipoGraduacion: "Regular",
-                            visibilidad: "Publico",
-                            mencion: cols[4].trim(),
-                            anioPresentacion: parseInt(cols[5].trim()) || 2025,
-                            anioPublicacion: parseInt(cols[6].trim()) || 2026,
-                            resumen: cols[7].trim(),
-                            palabrasClave: cols[8] ? cols[8].trim() : "",
-                            linkPdf: cols[9] ? cols[9].trim() : "https://drive.google.com",
-                            linkAuth: cols[10] ? cols[10].trim() : "https://drive.google.com",
-                            visitas: 0,
-                            estado: "Aprobado"
-                        });
-                        contador++;
-                    }
-                }
-                alert(`¡Se han importado ${contador} trabajos exitosamente!`);
-                fileInput.value = "";
-                renderizarVistaPublica();
-                if(rolActual === 'admin') { renderizarBandejaAprobacion(); cambiarTab('aprobacion'); }
-            };
-            reader.readAsText(file, "UTF-8");
+      localStorage.setItem('rad_identidad', JSON.stringify(identidadConfig));
+      aplicarIdentidadVisual();
+      alert('¡Configuración guardada!');
+    }
+
+    function toggleGestores() {
+      convocatorias.gestores = !convocatorias.gestores;
+      localStorage.setItem('rad_convocatorias', JSON.stringify(convocatorias));
+      actualizarUIConvocatorias();
+    }
+
+    function toggleRevisores() {
+      convocatorias.revisores = !convocatorias.revisores;
+      localStorage.setItem('rad_convocatorias', JSON.stringify(convocatorias));
+      actualizarUIConvocatorias();
+    }
+
+    function actualizarUIConvocatorias() {
+      if(document.getElementById('lblEstadoGestores')) {
+        document.getElementById('lblEstadoGestores').innerText = convocatorias.gestores ? 'ABIERTO' : 'CERRADO';
+        document.getElementById('lblEstadoGestores').className = convocatorias.gestores ? 'text-emerald-700 font-extrabold' : 'text-red-700 font-extrabold';
+        document.getElementById('btnGestores').innerText = convocatorias.gestores ? 'Cerrar Convocatoria Gestores' : 'Abrir Convocatoria Gestores';
+
+        document.getElementById('lblEstadoRevisores').innerText = convocatorias.revisores ? 'ABIERTO' : 'CERRADO';
+        document.getElementById('lblEstadoRevisores').className = convocatorias.revisores ? 'text-sky-700 font-extrabold' : 'text-red-700 font-extrabold';
+        document.getElementById('btnRevisores').innerText = convocatorias.revisores ? 'Cerrar Periodo Revisores' : 'Abrir Periodo Revisores';
+      }
+    }
+
+    function verPortal() {
+      rolActual = 'publico';
+      document.getElementById('vistaPublica').classList.remove('hidden');
+      document.getElementById('vistaAdmin').classList.add('hidden');
+      document.getElementById('vistaBuzon').classList.add('hidden');
+      filtrarPub();
+    }
+
+    function verBuzon() {
+      document.getElementById('vistaPublica').classList.add('hidden');
+      document.getElementById('vistaAdmin').classList.add('hidden');
+      document.getElementById('vistaBuzon').classList.remove('hidden');
+    }
+
+    function enviarBuzon(e) {
+      e.preventDefault();
+      const nuevoMsg = {
+        id: Date.now(),
+        nombre: document.getElementById('buzonNombre').value,
+        email: document.getElementById('buzonEmail').value,
+        tipo: document.getElementById('buzonTipo').value,
+        mensaje: document.getElementById('buzonMensaje').value,
+        estado: 'Pendiente',
+        fecha: new Date().toLocaleDateString()
+      };
+      buzonList.push(nuevoMsg);
+      localStorage.setItem('rad_buzon', JSON.stringify(buzonList));
+      alert('¡Mensaje enviado con éxito al buzón institucional!');
+      e.target.reset();
+      verPortal();
+    }
+
+    function cambiarEstadoBuzon(id, nuevoEstado) {
+      const msg = buzonList.find(x => x.id == id);
+      if(msg) {
+        msg.estado = nuevoEstado;
+        localStorage.setItem('rad_buzon', JSON.stringify(buzonList));
+        renderEstadisticasYBuzon();
+      }
+    }
+
+    function eliminarMensajeBuzon(id) {
+      if(confirm('¿Desea eliminar este mensaje del buzón?')) {
+        buzonList = buzonList.filter(x => x.id != id);
+        localStorage.setItem('rad_buzon', JSON.stringify(buzonList));
+        renderEstadisticasYBuzon();
+      }
+    }
+
+    function verAdmin() {
+      let pin = prompt('PIN de Administrador (o escriba "recuperar"):');
+      if (pin && pin.toLowerCase() === 'recuperar') {
+        ejecutarRecuperacionAdmin();
+        return;
+      }
+      if (pin === claves.admin) {
+        rolActual = 'admin';
+        document.getElementById('vistaPublica').classList.add('hidden');
+        document.getElementById('vistaBuzon').classList.add('hidden');
+        document.getElementById('vistaAdmin').classList.remove('hidden');
+        aplicarPermisosRol();
+        renderEstadisticasYBuzon();
+        renderTablaAdmin();
+        switchTab(1);
+      } else if(pin !== null) alert('PIN incorrecto');
+    }
+
+    function ejecutarRecuperacionAdmin() {
+      let resp = prompt(`RECUPERACIÓN DE CONTRASEÑA ADMIN\nPregunta: ${recuperacionConfig.pregunta}\nIngrese respuesta secreta:`);
+      if (resp === recuperacionConfig.respuesta) {
+        alert(`¡Respuesta correcta! Su contraseña Admin actual es: ${claves.admin}`);
+        let pin = prompt('Ingrese PIN obtenido para ingresar:');
+        if (pin === claves.admin) {
+          rolActual = 'admin';
+          document.getElementById('vistaPublica').classList.add('hidden');
+          document.getElementById('vistaBuzon').classList.add('hidden');
+          document.getElementById('vistaAdmin').classList.remove('hidden');
+          aplicarPermisosRol();
+          renderEstadisticasYBuzon();
+          renderTablaAdmin();
+          switchTab(1);
         }
+      } else if(resp !== null) alert('Respuesta incorrecta.');
+    }
 
-        function cargarEdicion(id) {
-            let doc = repositorio.find(d => d.id === id);
-            if(doc) {
-                document.getElementById('docTitulo').value = doc.titulo;
-                document.getElementById('docAutor').value = doc.autor;
-                document.getElementById('docColeccion').value = doc.coleccion;
-                document.getElementById('docNivel').value = doc.nivel || "Licenciatura";
-                document.getElementById('docModalidad').value = doc.modalidad;
-                document.getElementById('docTipoGraduacion').value = doc.tipoGraduacion || "Regular";
-                document.getElementById('docVisibilidad').value = doc.visibilidad || "Publico";
-                document.getElementById('docMencion').value = doc.mencion;
-                document.getElementById('docResumen').value = doc.resumen;
-                document.getElementById('docPalabrasClave').value = doc.palabrasClave || "";
-                document.getElementById('docAnioPresentacion').value = doc.anioPresentacion || 2025;
-                document.getElementById('docAnioPublicacion').value = doc.anioPublicacion || 2026;
-                document.getElementById('linkDrivePdf').value = doc.linkPdf;
-                document.getElementById('linkDriveAuth').value = doc.linkAuth;
+    function verGestores() {
+      if(!convocatorias.gestores) return alert('La convocatoria para gestores se encuentra actualmente CERRADA.');
+      const pin = prompt('PIN de Gestor:');
+      if (pin === claves.gestor) {
+        rolActual = 'gestor';
+        document.getElementById('vistaPublica').classList.add('hidden');
+        document.getElementById('vistaBuzon').classList.add('hidden');
+        document.getElementById('vistaAdmin').classList.remove('hidden');
+        aplicarPermisosRol();
+        switchTab(1);
+      } else if(pin !== null) alert('PIN incorrecto');
+    }
 
-                repositorio = repositorio.filter(d => d.id !== id);
-                cambiarTab('registros');
-                alert("Datos cargados para edición.");
-            }
+    function verRevisores() {
+      if(!convocatorias.revisores) return alert('El periodo de revisión se encuentra actualmente CERRADO.');
+      const pin = prompt('PIN de Revisor:');
+      if (pin === claves.revisor) {
+        rolActual = 'revisor';
+        document.getElementById('vistaPublica').classList.add('hidden');
+        document.getElementById('vistaBuzon').classList.add('hidden');
+        document.getElementById('vistaAdmin').classList.remove('hidden');
+        aplicarPermisosRol();
+        switchTab(2);
+        renderTablaAdmin();
+      } else if(pin !== null) alert('PIN incorrecto');
+    }
+
+    function aplicarPermisosRol() {
+      const menuTabs = document.getElementById('menuPestañasAdmin');
+      const boxVisForm = document.getElementById('boxVisibilidadForm');
+      const boxMasiva = document.getElementById('boxCargaMasiva');
+
+      if (rolActual === 'gestor') {
+        menuTabs.classList.add('hidden');
+        boxVisForm.classList.add('hidden');
+        if(boxMasiva) boxMasiva.classList.add('hidden');
+      } else if (rolActual === 'revisor') {
+        menuTabs.classList.add('hidden');
+        boxVisForm.classList.remove('hidden');
+        if(boxMasiva) boxMasiva.classList.add('hidden');
+      } else {
+        menuTabs.classList.remove('hidden');
+        boxVisForm.classList.remove('hidden');
+        if(boxMasiva) boxMasiva.classList.remove('hidden');
+      }
+    }
+
+    function cerrarSesion() { verPortal(); }
+
+    function switchTab(num) {
+      if (rolActual === 'gestor' && num !== 1) return;
+      if (rolActual === 'revisor' && num !== 2) return;
+      [1, 2, 3, 4].forEach(n => {
+        if(document.getElementById(`secTab${n}`)) document.getElementById(`secTab${n}`).classList.add('hidden');
+        let btnTab = document.getElementById(`tab${n}`);
+        if(btnTab) {
+          btnTab.className = "pb-3 border-b-2 text-slate-500 hover:text-slate-800 whitespace-nowrap transition-all border-transparent";
         }
+      });
+      document.getElementById(`secTab${num}`).classList.remove('hidden');
+      let activeBtn = document.getElementById(`tab${num}`);
+      if(activeBtn) {
+        activeBtn.className = "pb-3 border-b-2 border-amber-600 text-amber-600 font-extrabold whitespace-nowrap transition-all";
+      }
+      if(num === 4) renderEstadisticasYBuzon();
+    }
 
-        function eliminarDocumento(id) {
-            if(confirm("¿Estás segura de eliminar permanentemente este registro?")) {
-                repositorio = repositorio.filter(d => d.id !== id);
-                renderizarBandejaAprobacion();
-                renderizarBandejaRevisor();
-                renderizarVistaPublica();
-                alert("Documento eliminado correctamente.");
-            }
+    function guardarTrabajo(e) {
+      e.preventDefault();
+      const idEdit = document.getElementById('editId').value;
+      let visibilidadInicial = "Interno (Solo Comisión / Sin vista pública)";
+      let estadoInicial = "En Revisión";
+
+      if (rolActual === 'admin') {
+        visibilidadInicial = document.getElementById('regVisibilidad').value;
+        estadoInicial = visibilidadInicial.includes('Público') ? 'Aprobado (Público)' : 'En Revisión';
+      }
+
+      const datosDoc = {
+        id: idEdit ? Number(idEdit) : Date.now(),
+        titulo: document.getElementById('regTitulo').value,
+        autor: document.getElementById('regAutor').value,
+        tutor: document.getElementById('regTutor').value,
+        gestionDef: document.getElementById('regGestionDef').value,
+        gestionCarga: document.getElementById('regGestionCarga').value,
+        nivel: document.getElementById('regNivel').value,
+        modalidad: document.getElementById('regModalidad').value,
+        mencion: document.getElementById('regMencion').value,
+        coleccion: document.getElementById('regColeccion').value,
+        linea: document.getElementById('regLinea').value,
+        estadoEvaluacion: estadoInicial,
+        abstract: document.getElementById('regAbstract').value,
+        keywords: document.getElementById('regKeywords').value,
+        linkPdf: document.getElementById('regLinkPdf').value,
+        linkCarta: document.getElementById('regLinkCarta').value,
+        visibilidad: visibilidadInicial,
+        consultas: 0
+      };
+
+      if (idEdit) {
+        const idx = db.findIndex(x => x.id == idEdit);
+        if (idx !== -1) {
+          datosDoc.consultas = db[idx].consultas || 0;
+          datosDoc.estadoEvaluacion = db[idx].estadoEvaluacion;
+          db[idx] = datosDoc;
         }
+        alert('¡Actualizado con éxito!');
+      } else {
+        db.push(datosDoc);
+        alert(rolActual === 'gestor' ? '¡Trabajo enviado a revisión!' : '¡Registrado con éxito!');
+      }
 
-        function incrementarVisita(id) {
-            let doc = repositorio.find(d => d.id === id);
-            if(doc) doc.visitas = (doc.visitas || 0) + 1;
-        }
+      localStorage.setItem('rad_db_uagrm', JSON.stringify(db));
+      cancelarEdicion();
+      if (rolActual === 'gestor') verPortal();
+      else { switchTab(2); renderTablaAdmin(); }
+    }
 
-        function renderizarBandejaAprobacion() {
-            if(rolActual !== 'admin') return;
-            let tbody = document.getElementById('tbodyAprobacion');
-            tbody.innerHTML = "";
-            let pendientes = 0;
+    function cancelarEdicion() {
+      document.getElementById('editId').value = '';
+      document.getElementById('formReg').reset();
+    }
 
-            repositorio.forEach(doc => {
-                if(doc.estado === "Pendiente") pendientes++;
-                let tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${doc.titulo}</strong><br><small style="color:var(--gray-text);">${doc.autor}</small></td>
-                    <td><span class="badge">${doc.nivel}</span><br><small style="color:var(--gray-text);">${doc.modalidad}</small></td>
-                    <td><span class="badge badge-mencion">${doc.mencion}</span><br><small style="color:var(--gray-text);">Tipo: ${doc.tipoGraduacion}</small></td>
-                    <td>
-                        ${doc.estado === 'Pendiente' ? '<span class="badge badge-warning">Pendiente</span>' : doc.estado === 'Aprobado' ? '<span class="badge badge-success">Aprobado</span>' : '<span class="badge" style="background:#FEE2E2; color:#991B1B;">Rechazado</span>'}
-                        <br><small style="color:var(--gray-text);">Vista: ${doc.visibilidad}</small>
-                    </td>
-                    <td><a href="${doc.linkPdf}" target="_blank" class="btn btn-info" style="font-size:0.75rem; padding:0.3rem 0.6rem;">📄 Ver PDF</a></td>
-                    <td>
-                        ${doc.estado === 'Pendiente' ? `
-                            <button class="btn btn-success" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Aprobado')">✓ Aprobar</button>
-                            <button class="btn btn-danger" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Rechazado')">✕ Rechazar</button>
-                        ` : `<button class="btn" style="background:var(--gray-text); font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="cambiarEstadoDoc(${doc.id}, 'Pendiente')">Revisar</button>`}
-                        <br>
-                        <button class="btn" style="background:#0284C7; font-size:0.75rem; padding:0.25rem 0.5rem; margin-top:3px;" onclick="cargarEdicion(${doc.id})">✏️ Editar</button>
-                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.25rem 0.5rem; margin-top:3px; background:#7F1D1D;" onclick="eliminarDocumento(${doc.id})">🗑️ Eliminar</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+    function incrementarConsulta(id) {
+      const item = db.find(x => x.id == id);
+      if(item) {
+        item.consultas = (item.consultas || 0) + 1;
+        localStorage.setItem('rad_db_uagrm', JSON.stringify(db));
+      }
+    }
+
+    function cambiarEstadoEvaluacion(id, nuevoEstado) {
+      const item = db.find(x => x.id == id);
+      if(!item) return;
+      item.estadoEvaluacion = nuevoEstado;
+      item.visibilidad = nuevoEstado.includes('Aprobado') ? 'Público (Visible en Repositorio Abierto)' : 'Interno (Solo Comisión / Sin vista pública)';
+      localStorage.setItem('rad_db_uagrm', JSON.stringify(db));
+      renderTablaAdmin();
+      alert(`Estado actualizado a: ${nuevoEstado}`);
+    }
+
+    function editarItem(id) {
+      const item = db.find(x => x.id == id);
+      if (!item) return;
+      document.getElementById('editId').value = item.id;
+      document.getElementById('regTitulo').value = item.titulo;
+      document.getElementById('regAutor').value = item.autor;
+      document.getElementById('regTutor').value = item.tutor;
+      document.getElementById('regGestionDef').value = item.gestionDef;
+      document.getElementById('regGestionCarga').value = item.gestionCarga;
+      document.getElementById('regNivel').value = item.nivel;
+      document.getElementById('regModalidad').value = item.modalidad;
+      document.getElementById('regMencion').value = item.mencion;
+      document.getElementById('regColeccion').value = item.coleccion;
+      document.getElementById('regLinea').value = item.linea;
+      document.getElementById('regAbstract').value = item.abstract;
+      document.getElementById('regKeywords').value = item.keywords;
+      document.getElementById('regLinkPdf').value = item.linkPdf;
+      document.getElementById('regLinkCarta').value = item.linkCarta;
+      switchTab(1);
+    }
+
+    function eliminarItem(id) {
+      if(confirm('¿Eliminar registro del repositorio?')) {
+        db = db.filter(x => x.id !== id);
+        localStorage.setItem('rad_db_uagrm', JSON.stringify(db));
+        renderTablaAdmin();
+      }
+    }
+
+    function importarCSV(event) {
+      const file = event.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const lines = e.target.result.split('\n');
+        let count = 0;
+        for(let i=1; i<lines.length; i++) {
+          const row = lines[i].split(',');
+          if(row.length >= 9) {
+            db.push({
+              id: Date.now() + i,
+              titulo: row[0].replace(/"/g, '').trim(),
+              autor: row[1].replace(/"/g, '').trim(),
+              tutor: row[2].replace(/"/g, '').trim(),
+              nivel: row[3].replace(/"/g, '').trim(),
+              modalidad: row[4].replace(/"/g, '').trim(),
+              mencion: row[5].replace(/"/g, '').trim(),
+              coleccion: "Trabajos de titulación",
+              linea: "Didáctica, transformación curricular y evaluación educativa",
+              gestionDef: "2024",
+              gestionCarga: "2026",
+              estadoEvaluacion: "En Revisión",
+              abstract: "Resumen importado mediante carga masiva.",
+              keywords: row[6].replace(/"/g, '').trim(),
+              linkPdf: row[7].replace(/"/g, '').trim(),
+              linkCarta: row[8].replace(/"/g, '').trim(),
+              visibilidad: "Interno (Solo Comisión / Sin vista pública)",
+              consultas: 0
             });
-            document.getElementById('contador-pendientes').innerText = pendientes;
+            count++;
+          }
         }
+        localStorage.setItem('rad_db_uagrm', JSON.stringify(db));
+        alert(`¡Se importaron ${count} registros correctamente desde el archivo!`);
+        switchTab(2);
+        renderTablaAdmin();
+      };
+      reader.readAsText(file);
+    }
 
-        function cambiarEstadoDoc(id, nuevoEstado) {
-            let doc = repositorio.find(d => d.id === id);
-            if(doc) {
-                doc.estado = nuevoEstado;
-                if(nuevoEstado === 'Aprobado') alert(`¡El trabajo "${doc.titulo}" ha sido APROBADO!`);
-                renderizarBandejaAprobacion();
-                renderizarBandejaRevisor();
-                renderizarVistaPublica();
-            }
+    function renderTablaAdmin() {
+      const tbody = document.getElementById('tablaAdmin');
+      tbody.innerHTML = '';
+      
+      const pendientes = db.filter(x => !x.estadoEvaluacion || x.estadoEvaluacion.includes('Revisión') || x.estadoEvaluacion.includes('Observar')).length;
+      const badgeAprob = document.getElementById('badgeAprob');
+      if (badgeAprob) {
+        if (pendientes > 0) {
+          badgeAprob.innerText = pendientes;
+          badgeAprob.classList.remove('hidden');
+        } else {
+          badgeAprob.classList.add('hidden');
         }
+      }
 
-        function renderizarVistaPublica() {
-            let grid = document.getElementById('documentGrid');
-            grid.innerHTML = "";
-            // SOLO MUESTRA APROBADOS Y QUE TENGAN VISIBILIDAD PÚBLICA
-            let aprobados = repositorio.filter(d => d.estado === "Aprobado" && d.visibilidad === "Publico");
+      db.forEach(item => {
+        let estadoBg = 'bg-amber-100 text-amber-800';
+        if(item.estadoEvaluacion && item.estadoEvaluacion.includes('Aprobado')) estadoBg = 'bg-emerald-100 text-emerald-800';
+        if(item.estadoEvaluacion && item.estadoEvaluacion.includes('Observar')) estadoBg = 'bg-amber-500 text-white font-bold';
+        if(item.estadoEvaluacion && item.estadoEvaluacion.includes('Rechazado')) estadoBg = 'bg-red-600 text-white font-bold';
 
-            if(aprobados.length === 0) {
-                grid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: var(--gray-text); padding: 2rem;'>No hay documentos públicos aprobados para mostrar en este momento.</p>";
-                return;
-            }
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 border-b">
+            <td class="p-3"><p class="font-bold text-slate-900">${item.titulo}</p><p class="text-[11px] text-slate-500">Autor: ${item.autor} | Tutor: ${item.tutor}</p></td>
+            <td class="p-3"><span class="bg-slate-100 px-2 py-0.5 rounded font-bold text-[10px]">${item.nivel}</span><p class="text-[10px] text-slate-500">${item.modalidad}</p></td>
+            <td class="p-3"><span class="bg-sky-100 text-sky-900 px-2 py-0.5 rounded font-bold text-[10px]">${item.mencion}</span><p class="text-[10px] text-slate-500 truncate max-w-[150px]">${item.linea}</p></td>
+            <td class="p-3">
+              <span class="px-2 py-0.5 rounded font-bold text-[10px] inline-block mb-1 ${estadoBg}">${item.estadoEvaluacion || 'En Revisión'}</span>
+              <div class="flex flex-col gap-1">
+                <button onclick="cambiarEstadoEvaluacion(${item.id}, 'Aprobado (Público)')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-2 py-1 rounded text-[9px] font-bold text-left"><i class="fa-solid fa-check mr-1"></i> Aprobar y Publicar</button>
+                <button onclick="cambiarEstadoEvaluacion(${item.id}, 'Observar / Corregir')" class="bg-amber-600 hover:bg-amber-700 text-white px-2 py-1 rounded text-[9px] font-bold text-left"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Observar / Corregir</button>
+                <button onclick="cambiarEstadoEvaluacion(${item.id}, 'Rechazado')" class="bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded text-[9px] font-bold text-left"><i class="fa-solid fa-xmark mr-1"></i> Rechazar</button>
+              </div>
+              <p class="text-[10px] text-slate-400 mt-1">Defensa: ${item.gestionDef || 'N/A'} | Carga: ${item.gestionCarga}</p>
+            </td>
+            <td class="p-3 space-y-1">
+              <a href="${item.linkPdf}" target="_blank" class="bg-sky-600 hover:bg-sky-700 text-white px-2 py-1 rounded text-[10px] font-bold block text-center"><i class="fa-solid fa-book-open"></i> Ver PDF</a>
+              <a href="${item.linkCarta}" target="_blank" class="bg-indigo-700 hover:bg-indigo-800 text-white px-2 py-1 rounded text-[10px] font-bold block text-center"><i class="fa-solid fa-file-signature"></i> Autorización</a>
+            </td>
+            <td class="p-3 whitespace-nowrap">
+              <button onclick="editarItem(${item.id})" class="bg-amber-600 hover:bg-amber-700 text-white px-2 py-1 rounded text-[10px] font-bold w-full mb-1"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button onclick="eliminarItem(${item.id})" class="bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded text-[10px] font-bold w-full"><i class="fa-solid fa-trash"></i> Eliminar</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
 
-            aprobados.forEach(doc => {
-                let card = document.createElement('div');
-                card.className = "card";
-                card.setAttribute('data-coleccion', doc.coleccion);
-                card.setAttribute('data-nivel', doc.nivel);
-                card.setAttribute('data-mencion', doc.mencion);
+    function renderEstadisticasYBuzon() {
+      let totalConsultas = db.reduce((acc, curr) => acc + (curr.consultas || 0), 0);
+      document.getElementById('statVisitasWeb').innerText = visitasWeb;
+      document.getElementById('statTotalDocs').innerText = db.length;
+      document.getElementById('statTotalConsultas').innerText = totalConsultas;
 
-                card.innerHTML = `
-                    <div>
-                        <div class="badges-area">
-                            <span class="badge">${doc.coleccion}</span>
-                            <span class="badge badge-modalidad">${doc.nivel}</span>
-                            ${doc.mencion !== 'General' ? `<span class="badge badge-mencion">${doc.mencion}</span>` : ''}
-                        </div>
-                        <h3>${doc.titulo}</h3>
-                        <p class="meta">${doc.autor} • Defensa: ${doc.anioPresentacion} | Publicación: ${doc.anioPublicacion}</p>
-                        <p style="font-size: 0.9rem; color: var(--dark-text); margin-bottom: 0.5rem;">${doc.resumen}</p>
-                        ${doc.palabrasClave ? `<p class="keywords-tag">🏷️ Palabras clave: ${doc.palabrasClave}</p>` : ''}
-                        <p class="visitas-tag">👁️ Consultas / Accesos: ${doc.visitas || 0}</p>
-                    </div>
-                    <a href="${doc.linkPdf}" target="_blank" class="btn" onclick="incrementarVisita(${doc.id})">Acceder al Documento</a>
-                `;
-                grid.appendChild(card);
-            });
-            filtrarDocumentos();
+      let pendientesBuzon = buzonList.filter(x => !x.estado || x.estado === 'Pendiente').length;
+      document.getElementById('countBuzonBadge').innerText = buzonList.length;
+      
+      const badgeBuzon = document.getElementById('badgeBuzonPendiente');
+      if (badgeBuzon) {
+        if (pendientesBuzon > 0) {
+          badgeBuzon.innerText = pendientesBuzon;
+          badgeBuzon.classList.remove('hidden');
+        } else {
+          badgeBuzon.classList.add('hidden');
         }
+      }
 
-        function filtrarDocumentos() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let colFilter = document.getElementById('filterColeccion').value;
-            let nivelFilter = document.getElementById('filterNivel').value;
-            let mencFilter = document.getElementById('filterMencion').value;
-            let cards = document.getElementsByClassName('card');
+      const tablaEst = document.getElementById('tablaEstadisticasDocs');
+      tablaEst.innerHTML = '';
+      db.forEach(item => {
+        tablaEst.innerHTML += `
+          <tr class="border-b">
+            <td class="p-2.5 font-bold text-slate-800">${item.titulo}</td>
+            <td class="p-2.5 text-slate-600">${item.autor}</td>
+            <td class="p-2.5 text-center font-extrabold text-sky-800">${item.consultas || 0}</td>
+          </tr>
+        `;
+      });
 
-            for (let i = 0; i < cards.length; i++) {
-                let text = cards[i].innerText.toLowerCase();
-                let coleccion = cards[i].getAttribute('data-coleccion');
-                let nivel = cards[i].getAttribute('data-nivel');
-                let mencion = cards[i].getAttribute('data-mencion');
+      const listaB = document.getElementById('listaBuzonAdmin');
+      listaB.innerHTML = '';
+      if(buzonList.length === 0) {
+        listaB.innerHTML = `<p class="text-xs text-slate-400 italic">No hay mensajes en el buzón actualmente.</p>`;
+      } else {
+        buzonList.forEach(m => {
+          let estadoColor = m.estado === 'Respondido' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+          listaB.innerHTML += `
+            <div class="p-3 bg-slate-50 border rounded-xl space-y-2 text-xs">
+              <div class="flex justify-between items-center font-bold text-slate-800">
+                <span>${m.nombre} (${m.email})</span>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded text-[10px] ${estadoColor}">${m.estado || 'Pendiente'}</span>
+                  <button onclick="cambiarEstadoBuzon(${m.id}, '${m.estado === 'Respondido' ? 'Pendiente' : 'Respondido'}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded text-[10px]">
+                    Marcar ${m.estado === 'Respondido' ? 'Pendiente' : 'Respondido'}
+                  </button>
+                  <button onclick="eliminarMensajeBuzon(${m.id})" class="bg-red-700 hover:bg-red-800 text-white px-2 py-0.5 rounded text-[10px]" title="Eliminar mensaje">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                  <span class="text-slate-400 font-normal">${m.fecha}</span>
+                </div>
+              </div>
+              <p class="text-indigo-900 font-semibold">[${m.tipo}]</p>
+              <p class="text-slate-600">${m.mensaje}</p>
+            </div>
+          `;
+        });
+      }
+    }
 
-                let match = text.includes(input) && (colFilter === "" || coleccion === colFilter) && (nivelFilter === "" || nivel === nivelFilter) && (mencFilter === "" || mencion === mencFilter);
-                cards[i].style.display = match ? "flex" : "none";
-            }
-        }
+    function exportarCSVInterno() {
+      let csv = 'ID,Titulo,Autor,Tutor,Nivel,Modalidad,Mencion,Coleccion,LineaInvestigacion,Estado,Defensa,Carga,Consultas,LinkPdf,LinkAutorizacion\n';
+      db.forEach(x => {
+        csv += `"${x.id}","${x.titulo}","${x.autor}","${x.tutor}","${x.nivel}","${x.modalidad}","${x.mencion}","${x.coleccion}","${x.linea}","${x.estadoEvaluacion}","${x.gestionDef}","${x.gestionCarga}","${x.consultas || 0}","${x.linkPdf}","${x.linkCarta}"\n`;
+      });
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Descarga_Masiva_Formularios_Repositorio_UAGRM.csv';
+      a.click();
+    }
 
-        function cargarLogoLocal(event, targetId) {
-            let file = event.target.files[0];
-            if(file) {
-                let reader = new FileReader();
-                reader.onload = function(e) { document.getElementById(targetId).src = e.target.result; }
-                reader.readAsDataURL(file);
-            }
-        }
+    function exportarExcelEstadisticas() {
+      let csv = 'REPORTE ESTADISTICO Y DE CONSULTAS - REPOSITORIO UAGRM\n';
+      csv += `Visitas Totales a la Web,${visitasWeb}\n`;
+      csv += `Total Documentos Recopilados,${db.length}\n`;
+      csv += `Total Consultas a Documentos,${db.reduce((acc, curr) => acc + (curr.consultas || 0), 0)}\n\n`;
+      csv += 'Titulo del Trabajo,Autor,Nivel,Modalidad,Consultas\n';
+      db.forEach(x => {
+        csv += `"${x.titulo}","${x.autor}","${x.nivel}","${x.modalidad}",${x.consultas || 0}\n`;
+      });
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Reporte_Estadistico_UAGRM.csv';
+      a.click();
+    }
 
-        function convertirUrlDrive(url) {
-            if (!url) return "";
-            if (url.includes("drive.google.com")) {
-                let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                if (match && match[1]) return "https://lh3.googleusercontent.com/d/" + match[1];
-            }
-            return url;
-        }
+    function guardarRecuperacion() {
+      recuperacionConfig.email = document.getElementById('cfgEmailResguardo').value;
+      recuperacionConfig.pregunta = document.getElementById('cfgPreguntaSeguridad').value;
+      recuperacionConfig.respuesta = document.getElementById('cfgRespuestaSeguridad').value;
+      localStorage.setItem('rad_recuperacion', JSON.stringify(recuperacionConfig));
+      alert('Datos de recuperación guardados correctamente.');
+    }
 
-        function aplicarApariencia() {
-            let nuevoTitulo = document.getElementById('inputTitulo').value;
-            let nuevoSub = document.getElementById('inputSub').value;
-            let nuevoColor = document.getElementById('inputColor').value;
-            let urlUagrm = document.getElementById('inputUrlUagrm').value;
-            let urlCarrera = document.getElementById('inputUrlCarrera').value;
+    function cambiarClave(tipo) {
+      let val = '';
+      if(tipo === 'admin') val = document.getElementById('pwdAdmin').value;
+      if(tipo === 'revisor') val = document.getElementById('pwdRevisor').value;
+      if(tipo === 'gestor') val = document.getElementById('pwdGestor').value;
 
-            document.querySelector('#hero-section h2').innerText = nuevoTitulo;
-            document.querySelector('#hero-section p').innerText = nuevoSub;
-            document.querySelector('header').style.background = nuevoColor;
+      if(!val) return alert('Ingrese la nueva clave');
+      claves[tipo] = val;
+      localStorage.setItem('rad_keys', JSON.stringify(claves));
+      alert(`Contraseña de ${tipo} actualizada con éxito.`);
+    }
 
-            if(urlUagrm.trim() !== "") document.getElementById('imgLogoUagrm').src = convertirUrlDrive(urlUagrm);
-            if(urlCarrera.trim() !== "") document.getElementById('imgLogoCarrera').src = convertirUrlDrive(urlCarrera);
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(db, null, 2)], {type : 'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Resguardo_Repositorio_UAGRM.json';
+      a.click();
+    }
 
-            alert("¡Cambios de identidad visual aplicados correctamente!");
-        }
-    </script>
+    function toggleResumen(id) {
+      const shortEl = document.getElementById(`resumen-short-${id}`);
+      const fullEl = document.getElementById(`resumen-full-${id}`);
+      const btnEl = document.getElementById(`btn-resumen-${id}`);
+
+      if (fullEl.classList.contains('hidden')) {
+        shortEl.classList.add('hidden');
+        fullEl.classList.remove('hidden');
+        btnEl.innerHTML = 'Ver menos <i class="fa-solid fa-chevron-up ml-1 text-[10px]"></i>';
+      } else {
+        fullEl.classList.add('hidden');
+        shortEl.classList.remove('hidden');
+        btnEl.innerHTML = 'Ver más <i class="fa-solid fa-chevron-down ml-1 text-[10px]"></i>';
+      }
+    }
+
+    function filtrarPub() {
+      const q = document.getElementById('qPub').value.toLowerCase();
+      const nivel = document.getElementById('fNivelPub').value;
+      const mod = document.getElementById('fModPub').value;
+      const men = document.getElementById('fMenPub').value;
+
+      const grid = document.getElementById('gridPub');
+      grid.innerHTML = '';
+
+      const filtrados = db.filter(x => {
+        const esPub = x.visibilidad.includes('Público');
+        const mQ = x.titulo.toLowerCase().includes(q) || x.autor.toLowerCase().includes(q) || (x.keywords && x.keywords.toLowerCase().includes(q));
+        const mNivel = nivel === '' || x.nivel === nivel;
+        const mMod = mod === '' || x.modalidad === mod;
+        const mMen = men === '' || x.mencion === men;
+        return esPub && mQ && mNivel && mMod && mMen;
+      });
+
+      document.getElementById('cantPub').innerText = `${filtrados.length} registro${filtrados.length !== 1 ? 's' : ''}`;
+
+      filtrados.forEach(item => {
+        const abstractTexto = item.abstract || '';
+        const esLargo = abstractTexto.length > 180;
+        const resumenCorto = esLargo ? abstractTexto.substring(0, 180) + '...' : abstractTexto;
+
+        grid.innerHTML += `
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4 hover:shadow-md transition">
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-slate-100 text-slate-700 font-bold px-3 py-1 rounded-md text-xs">${item.coleccion || 'Trabajos de titulación'}</span>
+              <span class="bg-amber-50 text-amber-800 border border-amber-200 font-bold px-3 py-1 rounded-md text-xs">${item.nivel}</span>
+              <span class="bg-sky-50 text-sky-800 border border-sky-200 font-bold px-3 py-1 rounded-md text-xs">${item.mencion}</span>
+            </div>
+
+            <h3 class="text-lg md:text-xl font-black text-slate-900 leading-snug hover:text-sky-800 transition">
+              ${item.titulo}
+            </h3>
+
+            <p class="text-xs text-slate-500">
+              Autor: <strong class="text-slate-700">${item.autor}</strong> • Tutor: <strong class="text-slate-700">${item.tutor}</strong> • Defensa: <span class="text-slate-700">${item.gestionDef || 'N/A'}</span> | Publicación: <span class="text-slate-700">${item.gestionCarga}</span>
+            </p>
+
+            <div class="text-xs text-slate-600 leading-relaxed">
+              <span id="resumen-short-${item.id}">${resumenCorto}</span>
+              <span id="resumen-full-${item.id}" class="hidden">${abstractTexto}</span>
+              ${esLargo ? `<button id="btn-resumen-${item.id}" onclick="toggleResumen(${item.id})" class="text-sky-700 font-bold ml-1 hover:underline inline-flex items-center">Ver más <i class="fa-solid fa-chevron-down ml-1 text-[10px]"></i></button>` : ''}
+            </div>
+
+            <div class="text-xs text-slate-500 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass text-sky-600"></i> Línea de investigación: <strong class="text-slate-700 font-medium">${item.linea}</strong>
+            </div>
+
+            <div class="text-xs text-slate-500 italic flex items-center gap-1.5">
+              <i class="fa-solid fa-tag text-amber-500"></i> Palabras clave: <span class="text-slate-700 font-medium">${item.keywords}</span>
+            </div>
+
+            <div class="text-xs text-slate-500 flex items-center gap-1.5 font-medium">
+              <i class="fa-solid fa-eye text-slate-400"></i> Consultas / Accesos: <strong class="text-slate-800">${item.consultas || 0}</strong>
+            </div>
+
+            <div class="pt-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+              <a href="${item.linkPdf}" target="_blank" onclick="incrementarConsulta(${item.id})" class="inline-flex items-center gap-2 bg-[#082240] hover:bg-slate-800 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs shadow transition">
+                <i class="fa-solid fa-book-open"></i> Acceder al Documento (PDF)
+              </a>
+              <span class="text-[11px] text-slate-500 font-medium italic">
+                Licencia de uso: CC BY-NC-ND 4.0 · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es" target="_blank" class="text-sky-700 font-bold underline hover:text-sky-900">Ver condiciones</a>
+              </span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    aplicarIdentidadVisual();
+    actualizarUIConvocatorias();
+    filtrarPub();
+  </script>
 </body>
 </html>

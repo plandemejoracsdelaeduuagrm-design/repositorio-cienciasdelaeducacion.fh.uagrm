@@ -6,35 +6,33 @@
   <title id="metaTitle">Repositorio Académico Digital - Ciencias de la Educación (UAGRM)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .bg-header-institutional {
-      background-image: url('fondo_cabecera_blanco.jpg');
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-  </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
 
-  <!-- ENCABEZADO INSTITUCIONAL DINÁMICO -->
-  <header id="headerBar" class="bg-header-institutional text-white shadow-2xl border-b-4 border-amber-400 sticky top-0 z-50 transition-colors duration-300">
-    <div id="headerOverlay" class="absolute inset-0 bg-[#082240]/60 pointer-events-none"></div>
+  <!-- ENCABEZADO INSTITUCIONAL CON IMAGEN DE FONDO Y LOGOS PERMANENTES -->
+  <header id="headerBar" class="text-white shadow-2xl border-b-4 border-amber-400 sticky top-0 z-50 transition-colors duration-300 relative overflow-hidden bg-[#082240]">
+    
+    <!-- IMAGEN DE FONDO PERMANENTE -->
+    <div class="absolute inset-0 z-0">
+      <img src="fondo_cabecera_blanco.jpg" alt="Fondo Cabecera" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      <!-- Capa semitransparente para legibilidad de textos -->
+      <div class="absolute inset-0 bg-[#082240]/40"></div>
+    </div>
 
     <div class="container mx-auto px-6 py-3 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
       
       <!-- LOGO IZQUIERDA -->
       <div class="bg-white p-2 rounded-xl shadow-md border border-white/40 flex items-center justify-center shrink-0 w-20 h-20">
-        <img id="imgLogoIzq" src="LOGO oficial restaurado de la UAGRM.png" alt="UAGRM" class="w-14 h-14 object-contain mx-auto" onerror="this.onerror=null; this.src='';">
+        <img id="imgLogoIzq" src="LOGO oficial restaurado de la UAGRM.png" alt="UAGRM" class="w-14 h-14 object-contain mx-auto" onerror="this.onerror=null; this.src='https://via.placeholder.com/60?text=UAGRM';">
       </div>
 
       <!-- TÍTULO CENTRAL -->
       <div class="text-center space-y-0.5 flex-grow px-2">
-        <p id="headUniv" class="text-[10px] md:text-xs font-black tracking-widest uppercase text-slate-100 drop-shadow">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
-        <p id="headFac" class="text-[9px] md:text-xs font-extrabold tracking-wider uppercase text-slate-200 drop-shadow">FACULTAD DE HUMANIDADES</p>
-        <h1 id="headTituloPrincipal" class="text-xl md:text-2xl font-black text-amber-400 tracking-tight uppercase drop-shadow-md">CARRERA DE CIENCIAS DE LA EDUCACIÓN</h1>
+        <p id="headUniv" class="text-[10px] md:text-xs font-black tracking-widest uppercase text-slate-100 drop-shadow-md">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
+        <p id="headFac" class="text-[9px] md:text-xs font-extrabold tracking-wider uppercase text-slate-200 drop-shadow-md">FACULTAD DE HUMANIDADES</p>
+        <h1 id="headTituloPrincipal" class="text-xl md:text-2xl font-black text-amber-400 tracking-tight uppercase drop-shadow-lg">CARRERA DE CIENCIAS DE LA EDUCACIÓN</h1>
         <div>
-          <span id="headBadgeCarrera" class="text-[11px] md:text-xs font-extrabold text-white tracking-wide border-t border-amber-400/40 pt-0.5 inline-block px-3 drop-shadow">
+          <span id="headBadgeCarrera" class="text-[11px] md:text-xs font-extrabold text-white tracking-wide border-t border-amber-400/40 pt-0.5 inline-block px-3 drop-shadow-md">
             Repositorio Académico Digital
           </span>
         </div>
@@ -42,7 +40,7 @@
 
       <!-- LOGO DERECHA -->
       <div class="bg-white p-2 rounded-xl shadow-md border border-white/40 flex items-center justify-center shrink-0 w-20 h-20">
-        <img id="imgLogoDer" src="LOGO DE CARRERA 2026.png" alt="Ciencias de la Educación" class="w-14 h-14 object-contain mx-auto" onerror="this.onerror=null; this.src='';">
+        <img id="imgLogoDer" src="LOGO DE CARRERA 2026.png" alt="Ciencias de la Educación" class="w-14 h-14 object-contain mx-auto" onerror="this.onerror=null; this.src='https://via.placeholder.com/60?text=Carrera';">
       </div>
 
     </div>

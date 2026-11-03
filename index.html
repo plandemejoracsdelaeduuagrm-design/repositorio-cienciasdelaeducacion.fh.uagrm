@@ -205,7 +205,6 @@
 
         <!-- CONTENIDO PESTAÑA 1 -->
         <div id="secTab1" class="space-y-6">
-          <!-- CARGA MASIVA CSV / EXCEL -->
           <div id="boxCargaMasiva" class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
               <h3 class="font-bold text-emerald-900 text-sm mb-1"><i class="fa-solid fa-file-csv mr-1"></i> Carga Masiva desde Archivo CSV / Excel</h3>
@@ -299,21 +298,12 @@
                   <option value="Gestión educativa, políticas públicas, gobernanza y vinculación socioprofesional">6. Gestión educativa, políticas públicas, gobernanza y vinculación socioprofesional</option>
                   <option value="Educación, sociedad, familia y transformaciones socioculturales">7. Educación, sociedad, familia y transformaciones socioculturales</option>
                 </optgroup>
-                <optgroup label="── Líneas Facultativas (Humanidades / UAGRM) ──">
-                  <option value="Tecnologías y sociedad">Tecnologías y sociedad</option>
-                  <option value="Desarrollo y educación: contextos formales e informales">Desarrollo y educación: contextos formales e informales</option>
-                  <option value="Conocimientos e innovación tecnológica para el desarrollo humano">Conocimientos e innovación tecnológica para el desarrollo humano</option>
-                  <option value="Enfoques educativos y políticas públicas">Enfoques educativos y políticas públicas</option>
-                  <option value="Educación integral, formal y alternativa">Educación integral, formal y alternativa</option>
-                  <option value="Educación superior y desarrollo didáctico">Educación superior y desarrollo didáctico</option>
-                  <option value="Tecnología de la información y estrategias educativas (TIC, TAC y TEC)">Tecnología de la información y estrategias educativas (TIC, TAC y TEC)</option>
-                </optgroup>
               </select>
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">Resumen Extendido (Abstract) *</label>
-              <textarea id="regAbstract" rows="6" required placeholder="Escriba o pegue aquí el resumen completo y detallado del documento académico..." class="w-full p-3 border rounded-lg text-sm"></textarea>
+              <textarea id="regAbstract" rows="6" required placeholder="Escriba o pegue aquí el resumen completo..." class="w-full p-3 border rounded-lg text-sm"></textarea>
             </div>
 
             <div>
@@ -332,14 +322,6 @@
               </div>
             </div>
 
-            <div id="boxVisibilidadForm">
-              <label class="block text-xs font-bold text-slate-700 mb-1">Estado / Visibilidad Inicial *</label>
-              <select id="regVisibilidad" class="w-full p-2.5 border rounded-lg text-sm">
-                <option value="Público (Visible en Repositorio Abierto)">Aprobado (Público)</option>
-                <option value="Interno (Solo Comisión / Sin vista pública)">Borrador / Solo Interno</option>
-              </select>
-            </div>
-
             <div class="pt-4 flex justify-end gap-3">
               <button type="button" onclick="cancelarEdicion()" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs">Cancelar</button>
               <button type="submit" id="btnSubmitForm" class="bg-blue-900 hover:bg-blue-800 text-white font-extrabold px-6 py-2.5 rounded-lg shadow text-xs">Guardar Registro</button>
@@ -349,28 +331,14 @@
 
         <!-- CONTENIDO PESTAÑA 2: BANDEJA DE APROBACIÓN -->
         <div id="secTab2" class="hidden space-y-4">
-          <div class="flex flex-wrap justify-between items-center bg-slate-50 p-4 rounded-xl border gap-3">
-            <p class="text-xs text-slate-600 font-semibold">Supervise y gestione la dictaminación de trabajos académicos (Aprobar, Observar o Rechazar).</p>
-            <div class="flex gap-2 flex-wrap">
-              <button onclick="exportarCSVInterno()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
-                <i class="fa-solid fa-file-excel"></i> Descargar Excel Interno Completo (Masivo)
-              </button>
-              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
-                <i class="fa-solid fa-print"></i> Imprimir Reporte PDF
-              </button>
-            </div>
-          </div>
-
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-100 text-slate-700 font-extrabold border-b">
                 <tr>
                   <th class="p-3">TÍTULO / AUTOR / TUTOR</th>
                   <th class="p-3">NIVEL / MODALIDAD</th>
-                  <th class="p-3">MENCIÓN / LÍNEA</th>
-                  <th class="p-3">ESTADO / EVALUACIÓN</th>
-                  <th class="p-3">ENLACES ACCESO</th>
-                  <th class="p-3">ACCIONES DE REVISIÓN</th>
+                  <th class="p-3">ESTADO</th>
+                  <th class="p-3">ACCIONES</th>
                 </tr>
               </thead>
               <tbody id="tablaAdmin" class="divide-y divide-slate-200"></tbody>
@@ -380,117 +348,12 @@
 
         <!-- CONTENIDO PESTAÑA 4: ESTADÍSTICAS Y BUZÓN -->
         <div id="secTab4" class="hidden space-y-6">
-          <div class="flex justify-between items-center border-b pb-3 flex-wrap gap-3">
-            <h3 class="font-extrabold text-slate-900 text-lg"><i class="fa-solid fa-chart-line text-sky-700 mr-2"></i> Reporte Estadístico y Seguimiento de Consultas</h3>
-            <div class="flex gap-2">
-              <button onclick="exportarExcelEstadisticas()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
-                <i class="fa-solid fa-file-excel"></i> Descargar Estadísticas en Excel
-              </button>
-              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
-                <i class="fa-solid fa-file-pdf"></i> Imprimir / PDF Estadísticas
-              </button>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center space-y-1">
-              <p class="text-xs font-bold text-sky-900 uppercase">Visitas Generales a la Página</p>
-              <p id="statVisitasWeb" class="text-3xl font-black text-sky-800">0</p>
-              <p class="text-[10px] text-slate-500">Sesiones o accesos registrados al portal</p>
-            </div>
-            <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center space-y-1">
-              <p class="text-xs font-bold text-emerald-900 uppercase">Documentos Recopilados</p>
-              <p id="statTotalDocs" class="text-3xl font-black text-emerald-800">0</p>
-              <p class="text-[10px] text-slate-500">Registros académicos en la base de datos</p>
-            </div>
-            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center space-y-1">
-              <p class="text-xs font-bold text-amber-900 uppercase">Total Consultas a Documentos</p>
-              <p id="statTotalConsultas" class="text-3xl font-black text-amber-800">0</p>
-              <p class="text-[10px] text-slate-500">Clics totales en PDFs del repositorio</p>
-            </div>
-          </div>
-
-          <div class="space-y-3 pt-4">
-            <h4 class="font-bold text-slate-900 text-sm">Detalle de Consultas por Documento</h4>
-            <div class="overflow-x-auto border rounded-xl">
-              <table class="w-full text-left text-xs">
-                <thead class="bg-slate-100 text-slate-700 font-extrabold border-b">
-                  <tr>
-                    <th class="p-3">Título del Trabajo</th>
-                    <th class="p-3">Autor</th>
-                    <th class="p-3 text-center">Consultas / Accesos</th>
-                  </tr>
-                </thead>
-                <tbody id="tablaEstadisticasDocs" class="divide-y divide-slate-200"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="space-y-3 pt-6 border-t">
-            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <i class="fa-solid fa-comments text-indigo-700"></i> Buzón Recibido & Seguimiento de Mensajes (<span id="countBuzonBadge">0</span>)
-            </h4>
-            <div id="listaBuzonAdmin" class="space-y-3"></div>
-          </div>
+          <div id="listaBuzonAdmin" class="space-y-3"></div>
         </div>
 
         <!-- CONTENIDO PESTAÑA 3: CONFIGURACIÓN -->
         <div id="secTab3" class="hidden space-y-6">
-          <h3 class="font-extrabold text-slate-900 text-lg border-b pb-3">CONFIGURACIÓN DE IDENTIDAD, CONVOCATORIAS Y SEGURIDAD</h3>
-
-          <!-- CONTROL DE CONVOCATORIAS -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl space-y-2">
-              <h4 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
-                <i class="fa-solid fa-shield-halved text-emerald-700"></i> Convocatoria Gestores / Postulantes
-              </h4>
-              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoGestores" class="text-emerald-700 font-extrabold">ABIERTO</strong></p>
-              <button onclick="toggleGestores()" id="btnGestores" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
-                Cerrar Convocatoria Gestores
-              </button>
-            </div>
-
-            <div class="bg-sky-50/60 border border-sky-200 p-4 rounded-xl space-y-2">
-              <h4 class="font-bold text-sky-950 text-xs flex items-center gap-1.5">
-                <i class="fa-solid fa-eye text-sky-700"></i> Periodo Comisión Revisora / Tribunal
-              </h4>
-              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoRevisores" class="text-sky-700 font-extrabold">ABIERTO</strong></p>
-              <button onclick="toggleRevisores()" id="btnRevisores" class="bg-sky-700 hover:bg-sky-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
-                Cerrar Periodo Revisores
-              </button>
-            </div>
-          </div>
-
-          <!-- IDENTIDAD VISUAL -->
-          <div class="bg-sky-50/50 border border-sky-200 p-5 rounded-2xl space-y-4">
-            <h4 class="font-bold text-sky-950 text-sm"><i class="fa-solid fa-palette text-sky-700"></i> Identidad Visual y Encabezado</h4>
-            
-            <div class="space-y-3">
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Título Principal del Repositorio</label>
-                <input type="text" id="cfgTituloPrincipal" class="w-full p-2.5 border rounded-lg text-xs bg-white font-bold" value="CARRERA DE CIENCIAS DE LA EDUCACIÓN">
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Subtítulo Institucional</label>
-                <input type="text" id="cfgSubTitulo" class="w-full p-2.5 border rounded-lg text-xs bg-white" value="Repositorio Académico Digital">
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-white border rounded-xl shadow-sm">
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Color Título Principal</label>
-                  <input type="color" id="cfgColorTitulo" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#fbbf24">
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Color Subtítulos / Textos</label>
-                  <input type="color" id="cfgColorSub" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#ffffff">
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Color de Fondo Liso (Hex)</label>
-                  <input type="color" id="cfgColorHex" class="w-10 h-9 border rounded cursor-pointer p-1 bg-white" value="#082240">
-                </div>
-              </div>
-            </div>
-          </div>
+          <h3 class="font-extrabold text-slate-900 text-lg border-b pb-3">CONFIGURACIÓN DE SEGURIDAD</h3>
         </div>
 
       </div>
@@ -505,6 +368,67 @@
       <p class="text-[11px] text-slate-500">© 2026 Repositorio Académico Digital. Todos los derechos reservados.</p>
     </div>
   </footer>
+
+  <!-- SCRIPT DE CONTROL DE VISTAS Y NAVEGACIÓN -->
+  <script>
+    function verPortal() {
+      document.getElementById('vistaPublica').classList.remove('hidden');
+      document.getElementById('vistaBuzon').classList.add('hidden');
+      document.getElementById('vistaAdmin').classList.add('hidden');
+    }
+
+    function verBuzon() {
+      document.getElementById('vistaPublica').classList.add('hidden');
+      document.getElementById('vistaBuzon').classList.remove('hidden');
+      document.getElementById('vistaAdmin').classList.add('hidden');
+    }
+
+    function verGestores() {
+      verAdmin();
+      switchTab(1);
+    }
+
+    function verRevisores() {
+      verAdmin();
+      switchTab(2);
+    }
+
+    function verAdmin() {
+      document.getElementById('vistaPublica').classList.add('hidden');
+      document.getElementById('vistaBuzon').classList.add('hidden');
+      document.getElementById('vistaAdmin').classList.remove('hidden');
+      switchTab(1);
+    }
+
+    function switchTab(tabNum) {
+      document.getElementById('secTab1').classList.add('hidden');
+      document.getElementById('secTab2').classList.add('hidden');
+      document.getElementById('secTab3').classList.add('hidden');
+      document.getElementById('secTab4').classList.add('hidden');
+      
+      const target = document.getElementById('secTab' + tabNum);
+      if (target) target.classList.remove('hidden');
+    }
+
+    function cerrarSesion() {
+      verPortal();
+    }
+
+    function filtrarPub() {
+      // Función base para búsqueda en catálogo
+    }
+
+    function enviarBuzon(e) {
+      e.preventDefault();
+      alert('Consulta enviada con éxito al buzón.');
+      verPortal();
+    }
+
+    function guardarTrabajo(e) {
+      e.preventDefault();
+      alert('Registro guardado correctamente.');
+    }
+  </script>
 
 </body>
 </html>

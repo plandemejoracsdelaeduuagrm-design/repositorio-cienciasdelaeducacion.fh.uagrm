@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .bg-header-institutional {
+      background-image: url('fondo_cabecera_blanco.jpg');
       background-size: cover;
       background-position: center;
       position: relative;
@@ -18,7 +19,7 @@
 
   <!-- ENCABEZADO INSTITUCIONAL DINÁMICO -->
   <header id="headerBar" class="bg-header-institutional text-white shadow-2xl border-b-4 border-amber-400 sticky top-0 z-50 transition-colors duration-300">
-    <div id="headerOverlay" class="absolute inset-0 bg-[#082240]/40 pointer-events-none"></div>
+    <div id="headerOverlay" class="absolute inset-0 bg-[#082240]/60 pointer-events-none"></div>
 
     <div class="container mx-auto px-6 py-3 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
       
@@ -29,11 +30,11 @@
 
       <!-- TÍTULO CENTRAL -->
       <div class="text-center space-y-0.5 flex-grow px-2">
-        <p id="headUniv" class="text-[10px] md:text-xs font-black tracking-widest uppercase text-slate-200">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
-        <p id="headFac" class="text-[9px] md:text-xs font-extrabold tracking-wider uppercase text-slate-300">FACULTAD DE HUMANIDADES</p>
+        <p id="headUniv" class="text-[10px] md:text-xs font-black tracking-widest uppercase text-slate-100 drop-shadow">UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</p>
+        <p id="headFac" class="text-[9px] md:text-xs font-extrabold tracking-wider uppercase text-slate-200 drop-shadow">FACULTAD DE HUMANIDADES</p>
         <h1 id="headTituloPrincipal" class="text-xl md:text-2xl font-black text-amber-400 tracking-tight uppercase drop-shadow-md">CARRERA DE CIENCIAS DE LA EDUCACIÓN</h1>
         <div>
-          <span id="headBadgeCarrera" class="text-[11px] md:text-xs font-extrabold text-white tracking-wide border-t border-amber-400/40 pt-0.5 inline-block px-3">
+          <span id="headBadgeCarrera" class="text-[11px] md:text-xs font-extrabold text-white tracking-wide border-t border-amber-400/40 pt-0.5 inline-block px-3 drop-shadow">
             Repositorio Académico Digital
           </span>
         </div>
@@ -59,13 +60,13 @@
           <button onclick="verBuzon()" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
             <i class="fa-solid fa-comments"></i> Buzón de Consultas
           </button>
-          <button onclick="verGestores()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
+          <button onclick="solicitarAcceso('Gestor')" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
             <i class="fa-solid fa-folder-plus"></i> Acceso Gestores
           </button>
-          <button onclick="verRevisores()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
+          <button onclick="solicitarAcceso('Revisor')" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
             <i class="fa-solid fa-eye"></i> Revisores
           </button>
-          <button onclick="verAdmin()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
+          <button onclick="solicitarAcceso('Admin')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow cursor-pointer relative z-40">
             <i class="fa-solid fa-lock"></i> Admin
           </button>
         </div>
@@ -184,7 +185,7 @@
             <p id="subtituloPanelAdmin" class="text-xs text-slate-500">Gestión interna de metadatos, revisiones y estadísticas.</p>
           </div>
           <button onclick="cerrarSesion()" class="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-lg text-xs shadow transition">
-            Cerrar Sesión
+            Cerrar Sesión (<span id="lblRolActual">Admin</span>)
           </button>
         </div>
 
@@ -322,6 +323,14 @@
               </div>
             </div>
 
+            <div id="boxVisibilidadForm">
+              <label class="block text-xs font-bold text-slate-700 mb-1">Estado / Visibilidad Inicial *</label>
+              <select id="regVisibilidad" class="w-full p-2.5 border rounded-lg text-sm">
+                <option value="Público (Visible en Repositorio Abierto)">Aprobado (Público)</option>
+                <option value="Interno (Solo Comisión / Sin vista pública)">Borrador / Solo Interno</option>
+              </select>
+            </div>
+
             <div class="pt-4 flex justify-end gap-3">
               <button type="button" onclick="cancelarEdicion()" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs">Cancelar</button>
               <button type="submit" id="btnSubmitForm" class="bg-blue-900 hover:bg-blue-800 text-white font-extrabold px-6 py-2.5 rounded-lg shadow text-xs">Guardar Registro</button>
@@ -331,14 +340,27 @@
 
         <!-- CONTENIDO PESTAÑA 2: BANDEJA DE APROBACIÓN -->
         <div id="secTab2" class="hidden space-y-4">
+          <div class="flex flex-wrap justify-between items-center bg-slate-50 p-4 rounded-xl border gap-3">
+            <p class="text-xs text-slate-600 font-semibold">Supervise y gestione la dictaminación de trabajos académicos (Aprobar, Observar o Rechazar).</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="alert('Descargando reporte Excel completo...')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
+                <i class="fa-solid fa-file-excel"></i> Descargar Excel Interno Completo
+              </button>
+              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1">
+                <i class="fa-solid fa-print"></i> Imprimir Reporte PDF
+              </button>
+            </div>
+          </div>
+
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-100 text-slate-700 font-extrabold border-b">
                 <tr>
                   <th class="p-3">TÍTULO / AUTOR / TUTOR</th>
                   <th class="p-3">NIVEL / MODALIDAD</th>
-                  <th class="p-3">ESTADO</th>
-                  <th class="p-3">ACCIONES</th>
+                  <th class="p-3">MENCIÓN / LÍNEA</th>
+                  <th class="p-3">ESTADO / EVALUACIÓN</th>
+                  <th class="p-3">ACCIONES DE REVISIÓN</th>
                 </tr>
               </thead>
               <tbody id="tablaAdmin" class="divide-y divide-slate-200"></tbody>
@@ -348,12 +370,59 @@
 
         <!-- CONTENIDO PESTAÑA 4: ESTADÍSTICAS Y BUZÓN -->
         <div id="secTab4" class="hidden space-y-6">
-          <div id="listaBuzonAdmin" class="space-y-3"></div>
+          <div class="flex justify-between items-center border-b pb-3 flex-wrap gap-3">
+            <h3 class="font-extrabold text-slate-900 text-lg"><i class="fa-solid fa-chart-line text-sky-700 mr-2"></i> Reporte Estadístico y Seguimiento de Consultas</h3>
+            <div class="flex gap-2">
+              <button onclick="alert('Descargando estadísticas en Excel...')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-file-excel"></i> Descargar Estadísticas Excel
+              </button>
+              <button onclick="window.print()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-file-pdf"></i> Imprimir PDF
+              </button>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-sky-900 uppercase">Visitas Generales a la Página</p>
+              <p id="statVisitasWeb" class="text-3xl font-black text-sky-800">142</p>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-emerald-900 uppercase">Documentos Recopilados</p>
+              <p id="statTotalDocs" class="text-3xl font-black text-emerald-800">28</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center space-y-1">
+              <p class="text-xs font-bold text-amber-900 uppercase">Total Consultas a Documentos</p>
+              <p id="statTotalConsultas" class="text-3xl font-black text-amber-800">89</p>
+            </div>
+          </div>
         </div>
 
         <!-- CONTENIDO PESTAÑA 3: CONFIGURACIÓN -->
         <div id="secTab3" class="hidden space-y-6">
-          <h3 class="font-extrabold text-slate-900 text-lg border-b pb-3">CONFIGURACIÓN DE SEGURIDAD</h3>
+          <h3 class="font-extrabold text-slate-900 text-lg border-b pb-3">CONFIGURACIÓN DE IDENTIDAD, CONVOCATORIAS Y SEGURIDAD</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl space-y-2">
+              <h4 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved text-emerald-700"></i> Convocatoria Gestores / Postulantes
+              </h4>
+              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoGestores" class="text-emerald-700 font-extrabold">ABIERTO</strong></p>
+              <button onclick="toggleGestores()" id="btnGestores" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
+                Cerrar Convocatoria Gestores
+              </button>
+            </div>
+
+            <div class="bg-sky-50/60 border border-sky-200 p-4 rounded-xl space-y-2">
+              <h4 class="font-bold text-sky-950 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-eye text-sky-700"></i> Periodo Comisión Revisora / Tribunal
+              </h4>
+              <p class="text-xs text-slate-700">Estado: <strong id="lblEstadoRevisores" class="text-sky-700 font-extrabold">ABIERTO</strong></p>
+              <button onclick="toggleRevisores()" id="btnRevisores" class="bg-sky-700 hover:bg-sky-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">
+                Cerrar Periodo Revisores
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -369,8 +438,62 @@
     </div>
   </footer>
 
-  <!-- SCRIPT DE CONTROL DE VISTAS Y NAVEGACIÓN -->
+  <!-- SCRIPT DE CONTROL DE ACCESO SEGURA Y NAVEGACIÓN -->
   <script>
+    let rolSesion = null;
+
+    function solicitarAcceso(rolSolicitado) {
+      const claves = {
+        'Admin': 'admin123',
+        'Gestor': 'gestor123',
+        'Revisor': 'revisor123'
+      };
+
+      const pass = prompt(`Acceso restringido para ${rolSolicitado}.\nIngrese la contraseña de autorización:`);
+
+      if (pass === claves[rolSolicitado]) {
+        rolSesion = rolSolicitado;
+        document.getElementById('lblRolActual').innerText = rolSesion;
+        
+        document.getElementById('vistaPublica').classList.add('hidden');
+        document.getElementById('vistaBuzon').classList.add('hidden');
+        document.getElementById('vistaAdmin').classList.remove('hidden');
+
+        if (rolSolicitado === 'Gestor') {
+          switchTab(1);
+          ocultarTabsExcepto([1]);
+        } else if (rolSolicitado === 'Revisor') {
+          switchTab(2);
+          ocultarTabsExcepto([2]);
+        } else {
+          switchTab(1);
+          mostrarTodosTabs();
+        }
+      } else if (pass !== null) {
+        alert('Contraseña incorrecta. Acceso denegado.');
+      }
+    }
+
+    function ocultarTabsExcepto(tabsPermitidos) {
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById('tab' + n);
+        if (btn) {
+          if (tabsPermitidos.includes(n)) {
+            btn.classList.remove('hidden');
+          } else {
+            btn.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    function mostrarTodosTabs() {
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById('tab' + n);
+        if (btn) btn.classList.remove('hidden');
+      });
+    }
+
     function verPortal() {
       document.getElementById('vistaPublica').classList.remove('hidden');
       document.getElementById('vistaBuzon').classList.add('hidden');
@@ -383,51 +506,58 @@
       document.getElementById('vistaAdmin').classList.add('hidden');
     }
 
-    function verGestores() {
-      verAdmin();
-      switchTab(1);
-    }
-
-    function verRevisores() {
-      verAdmin();
-      switchTab(2);
-    }
-
-    function verAdmin() {
-      document.getElementById('vistaPublica').classList.add('hidden');
-      document.getElementById('vistaBuzon').classList.add('hidden');
-      document.getElementById('vistaAdmin').classList.remove('hidden');
-      switchTab(1);
-    }
-
     function switchTab(tabNum) {
-      document.getElementById('secTab1').classList.add('hidden');
-      document.getElementById('secTab2').classList.add('hidden');
-      document.getElementById('secTab3').classList.add('hidden');
-      document.getElementById('secTab4').classList.add('hidden');
+      [1, 2, 3, 4].forEach(n => {
+        const sec = document.getElementById('secTab' + n);
+        const btn = document.getElementById('tab' + n);
+        if (sec) sec.classList.add('hidden');
+        if (btn) btn.classList.remove('border-amber-500', 'text-amber-600');
+      });
       
       const target = document.getElementById('secTab' + tabNum);
+      const targetBtn = document.getElementById('tab' + tabNum);
       if (target) target.classList.remove('hidden');
+      if (targetBtn) targetBtn.classList.add('border-amber-500', 'text-amber-600');
     }
 
     function cerrarSesion() {
+      rolSesion = null;
       verPortal();
+      alert('Sesión cerrada correctamente.');
     }
 
-    function filtrarPub() {
-      // Función base para búsqueda en catálogo
+    function toggleGestores() {
+      const lbl = document.getElementById('lblEstadoGestores');
+      const btn = document.getElementById('btnGestores');
+      if (lbl.innerText === 'ABIERTO') {
+        lbl.innerText = 'CERRADO';
+        lbl.className = 'text-red-600 font-extrabold';
+        btn.innerText = 'Abrir Convocatoria Gestores';
+      } else {
+        lbl.innerText = 'ABIERTO';
+        lbl.className = 'text-emerald-700 font-extrabold';
+        btn.innerText = 'Cerrar Convocatoria Gestores';
+      }
     }
 
-    function enviarBuzon(e) {
-      e.preventDefault();
-      alert('Consulta enviada con éxito al buzón.');
-      verPortal();
+    function toggleRevisores() {
+      const lbl = document.getElementById('lblEstadoRevisores');
+      const btn = document.getElementById('btnRevisores');
+      if (lbl.innerText === 'ABIERTO') {
+        lbl.innerText = 'CERRADO';
+        lbl.className = 'text-red-600 font-extrabold';
+        btn.innerText = 'Abrir Periodo Revisores';
+      } else {
+        lbl.innerText = 'ABIERTO';
+        lbl.className = 'text-sky-700 font-extrabold';
+        btn.innerText = 'Cerrar Periodo Revisores';
+      }
     }
 
-    function guardarTrabajo(e) {
-      e.preventDefault();
-      alert('Registro guardado correctamente.');
-    }
+    function filtrarPub() {}
+    function enviarBuzon(e) { e.preventDefault(); alert('Consulta enviada al buzón.'); verPortal(); }
+    function guardarTrabajo(e) { e.preventDefault(); alert('Registro guardado exitosamente.'); }
+    function importarCSV(e) { alert('Procesando archivo CSV masivo...'); }
   </script>
 
 </body>
